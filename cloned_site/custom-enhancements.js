@@ -865,7 +865,7 @@
             return;
           }
 
-          if (label === 'LITE VERSION' || href === '/lite') {
+          if (label === 'PROJECT SLIDE VIEW' || label === 'LITE VERSION' || href === '/lite') {
             e.preventDefault();
             e.stopPropagation();
             window.location.assign('/lite');
@@ -900,8 +900,57 @@
     }, true);
   }
 
+  function setupMenuLabelSync() {
+    function applySync() {
+      const menuLinks = document.querySelectorAll('a._rHu7W_link, [class*="_rHu7W_menuPanel"] a');
+      menuLinks.forEach(link => {
+        const labelSpan = link.querySelector('._rHu7W_linkLabel') || link;
+        const text = (labelSpan.innerText || labelSpan.textContent || '').trim().toUpperCase();
+        const href = link.getAttribute('href') || '';
+
+        if (text === 'LAB' || href.includes('lab.aengel.io') || href.includes('lab.mahmudhasan.dev')) {
+          labelSpan.textContent = 'GITHUB REPO';
+          link.setAttribute('href', 'https://github.com/naimsmahmud50-dotcom');
+          link.setAttribute('target', '_blank');
+          link.setAttribute('rel', 'noopener noreferrer');
+        } else if (text === 'LITE VERSION') {
+          labelSpan.textContent = 'PROJECT SLIDE VIEW';
+          link.setAttribute('href', '/lite');
+        }
+      });
+
+      const sizers = document.querySelectorAll('._rHu7W_linkSizerLabel');
+      sizers.forEach(sizer => {
+        const txt = (sizer.innerText || sizer.textContent || '').trim().toUpperCase();
+        if (txt === 'LAB') {
+          sizer.textContent = 'GITHUB REPO';
+        } else if (txt === 'LITE VERSION') {
+          sizer.textContent = 'PROJECT SLIDE VIEW';
+        }
+      });
+    }
+
+    applySync();
+
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('button._rHu7W_iconButton, [class*="_rHu7W_iconButton"]')) {
+        setTimeout(applySync, 10);
+        setTimeout(applySync, 60);
+      }
+    }, true);
+
+    const observer = new MutationObserver(() => {
+      applySync();
+    });
+    const nav = document.querySelector('nav[data-navbar]');
+    if (nav) {
+      observer.observe(nav, { childList: true, subtree: true });
+    }
+  }
+
   function init() {
     setupLiteNavigation();
+    setupMenuLabelSync();
     setupEnterButtonFailsafe();
     setupProjectInteriorExitHud();
     setupAboutSection();
