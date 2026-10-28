@@ -36,7 +36,9 @@ An award-winning, agency-grade immersive 3D developer portfolio and experiential
 5. **Arabic Language & Cultural Club**: Digital language academy and cultural learning platform.
    - [Live Web App](https://arabic-langualge-and-cultural-club.vercel.app)
 6. **Student Life Circle**: Campus networking & student resource ecosystem.
+   - [GitHub Source](https://github.com/naimsmahmud50-dotcom/Student-Life-Circle)
 7. **Facebook Automation**: High-throughput social media intelligence and automation bot.
+   - [GitHub Source](https://github.com/naimsmahmud50-dotcom/Facebook-Automation-)
 
 ---
 

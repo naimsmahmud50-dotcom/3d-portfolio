@@ -49,10 +49,10 @@
     },
     'student life circle': {
       title: 'Student Life Circle',
-      demo: 'https://github.com/naimsmahmud50-dotcom',
-      github: 'https://github.com/naimsmahmud50-dotcom',
+      demo: 'https://github.com/naimsmahmud50-dotcom/Student-Life-Circle',
+      github: 'https://github.com/naimsmahmud50-dotcom/Student-Life-Circle',
       isLive: false,
-      category: 'Web Platform'
+      category: 'Campus Networking & EdTech Platform'
     },
     'facebook automation': {
       title: 'Facebook Automation',
@@ -314,12 +314,12 @@
         response.innerHTML = `
           <div style="color:#00e5ff; font-weight:bold; margin-bottom:6px;">── 7 PRODUCTION PROJECTS ──</div>
           <div>1. <a href="https://github.com/naimsmahmud50-dotcom/Madrasha-Managemant-Softaware" target="_blank" style="color:#00ff88; text-decoration:underline;">Madrasah Ecosystem</a> - Multi-tenant institution management platform</div>
-          <div>2. <a href="https://github.com/naimsmahmud50-dotcom" target="_blank" style="color:#00ff88; text-decoration:underline;">Secure My PC</a> - Defensive desktop security &amp; authorization platform</div>
-          <div>3. <a href="https://github.com/naimsmahmud50-dotcom" target="_blank" style="color:#00ff88; text-decoration:underline;">Autonomous AI Agent</a> - Self-healing autonomous task orchestration</div>
+          <div>2. <a href="https://github.com/naimsmahmud50-dotcom/MindPulse" target="_blank" style="color:#00ff88; text-decoration:underline;">Secure My PC</a> - Defensive desktop security &amp; authorization platform</div>
+          <div>3. <a href="https://github.com/naimsmahmud50-dotcom/Maijrun-Teach" target="_blank" style="color:#00ff88; text-decoration:underline;">Autonomous AI Agent</a> - Self-healing autonomous task orchestration</div>
           <div>4. <a href="https://travel-w-ith-maijrun-alpha.vercel.app" target="_blank" style="color:#00ff88; text-decoration:underline;">Travel with Maijrun</a> - Live enterprise travel booking portal</div>
-          <div>5. <a href="https://github.com/naimsmahmud50-dotcom" target="_blank" style="color:#00ff88; text-decoration:underline;">Arabic Language &amp; Cultural Club</a> - Interactive learning community platform</div>
-          <div>6. <a href="https://github.com/naimsmahmud50-dotcom" target="_blank" style="color:#00ff88; text-decoration:underline;">Student Life Circle</a> - Campus networking &amp; productivity ecosystem</div>
-          <div>7. <a href="https://github.com/naimsmahmud50-dotcom" target="_blank" style="color:#00ff88; text-decoration:underline;">Facebook Automation</a> - Meta Graph API automated marketing bot</div>
+          <div>5. <a href="https://arabic-langualge-and-cultural-club.vercel.app" target="_blank" style="color:#00ff88; text-decoration:underline;">Arabic Language &amp; Cultural Club</a> - Interactive learning community platform</div>
+          <div>6. <a href="https://github.com/naimsmahmud50-dotcom/Student-Life-Circle" target="_blank" style="color:#00ff88; text-decoration:underline;">Student Life Circle</a> - Campus networking &amp; productivity ecosystem</div>
+          <div>7. <a href="https://github.com/naimsmahmud50-dotcom/Facebook-Automation-" target="_blank" style="color:#00ff88; text-decoration:underline;">Facebook Automation</a> - Meta Graph API automated marketing bot</div>
         `;
         break;
 
