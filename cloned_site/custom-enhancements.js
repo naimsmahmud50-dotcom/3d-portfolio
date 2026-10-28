@@ -789,7 +789,7 @@
               isEntering = true;
               btn.click();
             }
-          }, 3500);
+          }, 800);
         }
       } else {
         if (gateTimer) {
