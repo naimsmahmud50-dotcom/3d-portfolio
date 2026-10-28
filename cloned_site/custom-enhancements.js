@@ -530,7 +530,7 @@
 
   // 7. Initialize All Modules
   
-  // 8. About Section: Full Stack Developer & AI Automation Expert + Portrait Display
+  // 8. About Section: Full Stack Developer & AI Automation Expert + Portrait Scroll Reveal
   function setupAboutSection() {
     function alignPortraitBelowPlate() {
       const plate = document.querySelector("._5tgptW_plate, [class*='_5tgptW_plate']");
@@ -544,7 +544,7 @@
           pane.style.setProperty('max-height', maxAvailHeight + 'px', 'important');
         }
 
-        // Active Portrait Image Assurance: Render Mahmud Hasan's real photo directly
+        // Active Portrait Image Assurance: Render Mahmud Hasan's real photo
         let img = pane.querySelector("img");
         if (!img) {
           img = document.createElement("img");
@@ -568,11 +568,9 @@
         img.style.setProperty('width', '100%', 'important');
         img.style.setProperty('height', '100%', 'important');
 
-        pane.style.setProperty('opacity', '1', 'important');
-        pane.style.setProperty('clip-path', 'none', 'important');
-        pane.style.setProperty('visibility', 'visible', 'important');
-        pane.style.setProperty('display', 'block', 'important');
-        pane.style.setProperty('background', '#090e17', 'important');
+        // Do NOT force opacity: 1 !important or clip-path: none !important here.
+        // Let Three.js and GSAP naturally drive the scroll reveal as 'UNSEEN' transitions to 'NOISE'!
+        pane.style.setProperty('background', '#080d16', 'important');
       }
     }
 
@@ -595,22 +593,50 @@
           lead.textContent = targetLead;
         }
 
-        // 3. Render clean, sleek skills grid
-        if (!document.getElementById("mh-about-skills-container")) {
+        // 3. Render clean, emoji-free, cyber-editorial skills matrix
+        if (!document.getElementById("mh-about-skills-matrix")) {
           const oldSeal = document.getElementById("mh-about-security-seal");
           if (oldSeal) oldSeal.remove();
+          const oldContainer = document.getElementById("mh-about-skills-container");
+          if (oldContainer) oldContainer.remove();
 
           const skillsContainer = document.createElement("div");
-          skillsContainer.id = "mh-about-skills-container";
+          skillsContainer.id = "mh-about-skills-matrix";
           skillsContainer.style.pointerEvents = "auto";
-          skillsContainer.style.marginTop = "12px";
+          skillsContainer.style.marginTop = "10px";
+          skillsContainer.style.marginBottom = "4px";
           skillsContainer.innerHTML = `
             <div class="mh-skills-grid">
-              <span class="mh-skill-chip"><span class="chip-dot"></span>⚡ Full Stack Development (Next.js / Node.js / React)</span>
-              <span class="mh-skill-chip"><span class="chip-dot"></span>🤖 AI Automation &amp; Agent Swarms (LangChain / Python)</span>
-              <span class="mh-skill-chip"><span class="chip-dot"></span>📱 Mobile App Development (Flutter / Android SDK)</span>
-              <span class="mh-skill-chip"><span class="chip-dot"></span>💬 Business Automation (WhatsApp API &amp; Webhooks)</span>
-              <span class="mh-skill-chip"><span class="chip-dot"></span>🛡️ Web Security &amp; Vulnerability Assessment (OWASP)</span>
+              <div class="mh-skill-chip">
+                <span class="chip-accent">//</span>
+                <span class="chip-lead">FULL STACK DEV</span>
+                <span class="chip-sep">/</span>
+                <span class="chip-detail">NEXT.JS · NODE.JS · REACT · TYPESCRIPT</span>
+              </div>
+              <div class="mh-skill-chip">
+                <span class="chip-accent">//</span>
+                <span class="chip-lead">AI AUTOMATION</span>
+                <span class="chip-sep">/</span>
+                <span class="chip-detail">LANGCHAIN · AUTONOMOUS AGENTS · PYTHON</span>
+              </div>
+              <div class="mh-skill-chip">
+                <span class="chip-accent">//</span>
+                <span class="chip-lead">MOBILE APPS</span>
+                <span class="chip-sep">/</span>
+                <span class="chip-detail">FLUTTER · ANDROID SDK · CROSS-PLATFORM</span>
+              </div>
+              <div class="mh-skill-chip">
+                <span class="chip-accent">//</span>
+                <span class="chip-lead">INTEGRATIONS</span>
+                <span class="chip-sep">/</span>
+                <span class="chip-detail">WHATSAPP CLOUD API · WEBHOOKS · BOTS</span>
+              </div>
+              <div class="mh-skill-chip">
+                <span class="chip-accent">//</span>
+                <span class="chip-lead">CYBER SECURITY</span>
+                <span class="chip-sep">/</span>
+                <span class="chip-detail">OWASP TOP 10 · PENETRATION TESTING</span>
+              </div>
             </div>
           `;
           if (lead) {
