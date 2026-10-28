@@ -1,5 +1,7 @@
 {
   "version": 2,
+  "framework": null,
+  "buildCommand": "echo 'Static 3D portfolio ready'",
   "outputDirectory": "cloned_site",
   "cleanUrls": true,
   "trailingSlash": false,

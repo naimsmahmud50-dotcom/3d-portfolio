@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "node server_hubuhu.js",
+    "build": "echo 'Static 3D portfolio ready'",
+    "start": "node server_hubuhu.js",
     "serve": "node server_hubuhu.js",
     "lint": "next lint"
   },
