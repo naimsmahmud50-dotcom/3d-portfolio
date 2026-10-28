@@ -21,10 +21,11 @@
     },
     'secure my pc': {
       title: 'Secure My PC',
-      demo: 'https://github.com/naimsmahmud50-dotcom/MindPulse',
-      github: 'https://github.com/naimsmahmud50-dotcom/MindPulse',
+      demo: 'https://github.com/naimsmahmud50-dotcom',
+      github: 'https://github.com/naimsmahmud50-dotcom',
       isLive: false,
-      category: 'Cybersecurity & Win32'
+      isPrivate: true,
+      category: 'Cybersecurity & Win32 (Private Repo)'
     },
     'maijrun store': {
       title: 'MAIJRUN Tech Store',
@@ -336,7 +337,7 @@
         response.innerHTML = `
           <div style="color:#00e5ff; font-weight:bold; margin-bottom:6px;">── 8 PRODUCTION PROJECTS ──</div>
           <div>1. <a href="https://github.com/naimsmahmud50-dotcom/Madrasha-Managemant-Softaware" target="_blank" style="color:#00ff88; text-decoration:underline;">Madrasah Ecosystem</a> - Multi-tenant institution management platform</div>
-          <div>2. <a href="https://github.com/naimsmahmud50-dotcom/MindPulse" target="_blank" style="color:#00ff88; text-decoration:underline;">Secure My PC</a> - Defensive desktop security &amp; authorization platform</div>
+          <div>2. <a href="https://github.com/naimsmahmud50-dotcom" target="_blank" style="color:#00ff88; text-decoration:underline;">Secure My PC</a> <span style="color:#00e5ff; font-size:11px; margin-left:4px; border:1px solid rgba(0,229,255,0.4); padding:1px 6px; border-radius:4px;">[Private Enterprise Repo]</span> - Defensive desktop security &amp; authorization platform</div>
           <div>3. <a href="https://github.com/naimsmahmud50-dotcom/Maijrun-Teach" target="_blank" style="color:#00ff88; text-decoration:underline;">MAIJRUN Tech Store</a> - Enterprise tech e-commerce &amp; custom PC builder platform</div>
           <div>4. <a href="https://travel-w-ith-maijrun-alpha.vercel.app" target="_blank" style="color:#00ff88; text-decoration:underline;">Travel with Maijrun</a> - Live enterprise travel booking portal</div>
           <div>5. <a href="https://arabic-langualge-and-cultural-club.vercel.app" target="_blank" style="color:#00ff88; text-decoration:underline;">Arabic Language &amp; Cultural Club</a> - Interactive learning community platform</div>
@@ -448,12 +449,16 @@
 
       if (matchedProject) {
         const isLive = Boolean(matchedProject.isLive);
+        const isPrivate = Boolean(matchedProject.isPrivate);
         const liveIndicator = isLive 
           ? '<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#00ff88;box-shadow:0 0 8px #00ff88;margin-right:2px;"></span>' 
+          : isPrivate
+          ? '<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#00e5ff;box-shadow:0 0 8px #00e5ff;margin-right:2px;"></span>'
           : '<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#8c8c8c;margin-right:2px;"></span>';
-        const demoLabel = isLive ? 'LIVE DEMO' : 'GITHUB DEMO';
-        const demoBorder = isLive ? '1.5px solid #00ff88' : '1.5px solid rgba(255, 255, 255, 0.25)';
-        const demoGlow = isLive ? '0 4px 18px rgba(0, 255, 136, 0.3)' : '0 4px 14px rgba(0, 0, 0, 0.5)';
+        const demoLabel = isPrivate ? 'PRIVATE REPO' : (isLive ? 'LIVE DEMO' : 'GITHUB DEMO');
+        const demoBorder = isLive ? '1.5px solid #00ff88' : (isPrivate ? '1.5px solid rgba(0, 229, 255, 0.45)' : '1.5px solid rgba(255, 255, 255, 0.25)');
+        const demoGlow = isLive ? '0 4px 18px rgba(0, 255, 136, 0.3)' : (isPrivate ? '0 4px 18px rgba(0, 229, 255, 0.35)' : '0 4px 14px rgba(0, 0, 0, 0.5)');
+        const gitLabel = isPrivate ? 'GITHUB PROFILE' : 'GITHUB REPO';
 
         actionsWrap.innerHTML = `
           <a href="${matchedProject.demo}" target="_blank" rel="noopener noreferrer" class="mh-hud-pill-demo" style="
@@ -495,7 +500,7 @@
             box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
             text-decoration: none;
             transition: all 0.25s ease;
-          ">&lt; &gt; GITHUB</a>
+          ">&lt; &gt; ${gitLabel}</a>
         `;
       }
     }, 500);

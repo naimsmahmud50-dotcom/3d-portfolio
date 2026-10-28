@@ -67,11 +67,11 @@
         "height": 1440
       },
       "editorial": {
-        "overline": "Project 2",
+        "overline": "Project 2 \u2022 Private Enterprise Repo",
         "title": "Secure My PC",
         "year": 2024,
-        "tagline": "Native Windows Threat Watchdog & Defense Daemon",
-        "description": "A lightweight native security utility that protects Windows workstations against unauthorized external media and suspicious background activity. Features sub-50ms USB flash drive interception and automated emergency lockouts with negligible CPU overhead.",
+        "tagline": "Native Windows Threat Watchdog & Defense Daemon [Private Repo]",
+        "description": "A lightweight native security utility that protects Windows workstations against unauthorized external media and suspicious background activity. Features sub-50ms USB flash drive interception and automated emergency lockouts with negligible CPU overhead. (Source code is maintained in an authorized private enterprise repository).",
         "roleTitles": [
           "systems & security engineer",
           "pc software developer"
@@ -85,7 +85,7 @@
           "SQLite"
         ],
         "challenges": "Interpreting low-level Win32 hardware device signals cleanly without false positives or degrading system performance.",
-        "liveUrl": "https://github.com/naimsmahmud50-dotcom/MindPulse"
+        "liveUrl": "https://github.com/naimsmahmud50-dotcom"
       },
       "gallery": [
         {
