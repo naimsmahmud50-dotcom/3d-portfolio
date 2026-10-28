@@ -742,8 +742,9 @@
       document.querySelectorAll('.mh-cta-beacon, .mh-cta-arrow').forEach(el => el.remove());
 
       const loader = document.querySelector('.y9w63G_loaderContainer');
+      const isGate = loader && loader.classList.contains('y9w63G_gate');
       const btn = document.querySelector('button[data-testid="loader-enter"], .y9w63G_cta');
-      if (btn) {
+      if (btn && isGate) {
         btn.disabled = false;
         btn.removeAttribute('disabled');
         btn.setAttribute('tabindex', '0');
@@ -754,91 +755,49 @@
     sanitizeEnterButton();
     const enterObserver = new MutationObserver(sanitizeEnterButton);
     if (document.body) {
-      enterObserver.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class', 'disabled'] });
+      enterObserver.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
     }
 
-    // Audio gesture unlock and failsafe: Click ANYWHERE on loader screen to enter
+    // Audio gesture unlock and failsafe: Click ANYWHERE on gate screen to enter
     document.addEventListener('click', function(e) {
       const loader = document.querySelector('.y9w63G_loaderContainer');
+      const isGate = loader && loader.classList.contains('y9w63G_gate');
       const btn = document.querySelector('button[data-testid="loader-enter"], .y9w63G_cta');
       
-      if (loader && !isEntering && !loader.classList.contains('y9w63G_exiting')) {
+      // If clicked on button or clicked anywhere on the gate screen
+      if (loader && isGate && !isEntering && !loader.classList.contains('y9w63G_exiting')) {
         isEntering = true;
         try {
           if (window.__aengel_audioEngine && window.__aengel_audioEngine.ctx && window.__aengel_audioEngine.ctx.state === 'suspended') {
             window.__aengel_audioEngine.ctx.resume();
           }
         } catch (_) {}
-        loader.classList.add('y9w63G_gate');
-        if (btn) {
-          btn.disabled = false;
-          btn.removeAttribute('disabled');
-          btn.click();
-        }
-        setTimeout(() => {
-          loader.classList.add('y9w63G_exiting', 'exiting');
-          setTimeout(() => {
-            loader.style.setProperty('display', 'none', 'important');
-            loader.remove();
-          }, 800);
-        }, 300);
+        if (btn) btn.click();
       }
     }, false);
 
-    // Auto-enter watchdog: Detects readiness and auto-enters seamlessly without trapping the user
-    let loadWatchStartTime = Date.now();
+    // Auto-enter watchdog: If user waits on the gate screen for 3.5 seconds, auto-enter into the 3D world
     let gateTimer = null;
-    const loaderWatchInterval = setInterval(() => {
+    setInterval(() => {
       const loader = document.querySelector('.y9w63G_loaderContainer');
+      const isGate = loader && loader.classList.contains('y9w63G_gate');
       const btn = document.querySelector('button[data-testid="loader-enter"], .y9w63G_cta');
-      
-      if (!loader || isEntering || loader.classList.contains('y9w63G_exiting') || loader.style.display === 'none') {
-        if (!loader) clearInterval(loaderWatchInterval);
-        return;
-      }
-
-      // If WebGPU is unsupported on this device, redirect to /lite instantly
-      const bodyText = document.body ? document.body.innerText : '';
-      if (bodyText.includes('WebGPU Not Available') || bodyText.includes('not suited to the WebGPU')) {
-        isEntering = true;
-        clearInterval(loaderWatchInterval);
-        window.location.replace('/lite');
-        return;
-      }
-
-      const isGate = loader.classList.contains('y9w63G_gate');
-      const isReadyText = bodyText.includes('Ready') || bodyText.includes('READY');
-      const fillEl = document.querySelector('.y9w63G_fill');
-      const fillWidth = fillEl ? parseFloat(fillEl.style.width || '0') : 0;
-      const elapsed = Date.now() - loadWatchStartTime;
-
-      // Enter if gate is open, ready text is shown, fill is full, or after 2.5s maximum
-      const shouldEnter = isGate || isReadyText || fillWidth >= 95 || elapsed > 2500;
-
-      if (shouldEnter) {
+      if (isGate && !isEntering && !loader.classList.contains('y9w63G_exiting')) {
         if (!gateTimer) {
           gateTimer = setTimeout(() => {
-            if (!isEntering) {
+            if (!isEntering && btn) {
               isEntering = true;
-              clearInterval(loaderWatchInterval);
-              loader.classList.add('y9w63G_gate');
-              if (btn) {
-                btn.disabled = false;
-                btn.removeAttribute('disabled');
-                btn.click();
-              }
-              setTimeout(() => {
-                loader.classList.add('y9w63G_exiting', 'exiting');
-                setTimeout(() => {
-                  loader.style.setProperty('display', 'none', 'important');
-                  loader.remove();
-                }, 800);
-              }, 400);
+              btn.click();
             }
-          }, 400);
+          }, 800);
+        }
+      } else {
+        if (gateTimer) {
+          clearTimeout(gateTimer);
+          gateTimer = null;
         }
       }
-    }, 200);
+    }, 300);
 
     // Keyboard support: pressing Enter or Space when on the loader screen triggers click
     window.addEventListener('keydown', function(e) {

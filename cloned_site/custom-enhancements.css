@@ -195,8 +195,7 @@
 /* Smooth cinematic slow-motion loader curtain exit transition */
 body.is-lite .y9w63G_loaderContainer,
 html[data-route*="lite"] .y9w63G_loaderContainer,
-.is-lite .y9w63G_loaderContainer,
-body:has([data-lite-index]) .y9w63G_loaderContainer {
+.is-lite .y9w63G_loaderContainer {
   display: none !important;
   opacity: 0 !important;
   visibility: hidden !important;
