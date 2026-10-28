@@ -111,35 +111,36 @@
       ]
     },
     {
-      "slug": "ai-agent",
-      "name": "Autonomous AI Agent",
-      "nameInk": "#e0e0e0",
-      "image": "/assets/HeroImg-PRESTI-1600x900.webp",
+      "slug": "maijrun-store",
+      "name": "MAIJRUN Tech Store",
+      "nameInk": "#00e5ff",
+      "image": "/images/projects/store.svg",
       "ogImage": {
-        "url": "/assets/HeroImg-PRESTI-1600x900.webp",
-        "alt": "Autonomous AI Agent",
-        "width": 2560,
-        "height": 1440
+        "url": "/images/projects/store.svg",
+        "alt": "MAIJRUN Tech Store",
+        "width": 1200,
+        "height": 800
       },
       "editorial": {
         "overline": "Project 3",
-        "title": "Autonomous AI Agent",
+        "title": "MAIJRUN Tech Store",
         "year": 2024,
-        "tagline": "Autonomous Workflow Orchestration & Data Swarm",
-        "description": "An autonomous multi-agent system designed to execute continuous complex digital tasks, automated browser interactions, and contextual workflow pipelines. Operates with deterministic decision graphs and reliable human-in-the-loop safeguards.",
+        "tagline": "Enterprise Headless Tech & Hardware E-Commerce Platform",
+        "description": "A production-grade, headless e-commerce ecosystem built for Bangladesh's tech and hardware market (Laptops, Custom Desktops, PC Components). Features live Custom PC Builder compatibility engine, BDT pricing with bKash/Nagad/SSLCommerz, live Steadfast/Pathao courier tracking, passwordless phone OTP, and OWASP ASVS L2 security.",
         "roleTitles": [
-          "ai automation architect",
-          "agent builder"
+          "Lead Full-Stack E-Commerce Architect",
+          "Systems Engineer"
         ],
-        "roleDescription": "Designed multi-agent state machines, deterministic execution graphs, and automated browser extraction scripts.",
+        "roleDescription": "Architected the Next.js 15 headless storefront, Medusa v1.20 backend, real-time hardware compatibility engine, and localized payment & courier webhook gateways.",
         "stack": [
-          "Python",
-          "LangChain",
-          "LangGraph",
-          "Playwright",
-          "PostgreSQL"
+          "Next.js 15",
+          "TypeScript",
+          "Medusa v1.20",
+          "PostgreSQL",
+          "Redis",
+          "Tailwind CSS"
         ],
-        "challenges": "Maintaining deterministic agent flow states and resilient retry routines across dynamic, JavaScript-heavy web applications.",
+        "challenges": "Engineered real-time hardware socket matching and TDP power headroom validation while maintaining strict OWASP ASVS Level 2 security and sub-second payment idempotency.",
         "liveUrl": "https://github.com/naimsmahmud50-dotcom/Maijrun-Teach"
       },
       "gallery": [

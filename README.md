@@ -29,8 +29,8 @@ An award-winning, agency-grade immersive 3D developer portfolio and experiential
    - [GitHub Source](https://github.com/naimsmahmud50-dotcom/Madrasha-Managemant-Softaware)
 2. **Secure My PC**: Low-level Windows security daemon with active memory defense.
    - [GitHub Source](https://github.com/naimsmahmud50-dotcom/MindPulse)
-3. **Autonomous AI Agent**: Self-directing agentic workflow system with LLM reasoning.
-   - [GitHub Source](https://github.com/naimsmahmud50-dotcom/Autonomous-AI-Agent)
+3. **MAIJRUN Tech Store**: Enterprise-grade headless tech & hardware e-commerce platform built with Next.js 15, Medusa v1.20, PostgreSQL & Redis. Features Custom PC Builder compatibility engine, bKash/Nagad/SSLCommerz payments, and live Steadfast/Pathao courier tracking.
+   - [GitHub Source](https://github.com/naimsmahmud50-dotcom/Maijrun-Teach)
 4. **Travel with Maijrun**: Luxury travel & tour booking agency with real-time itinerary booking.
    - [Live Web App](https://travel-w-ith-maijrun-alpha.vercel.app)
 5. **Arabic Language & Cultural Club**: Digital language academy and cultural learning platform.

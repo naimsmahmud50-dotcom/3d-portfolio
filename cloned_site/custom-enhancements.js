@@ -26,12 +26,26 @@
       isLive: false,
       category: 'Cybersecurity & Win32'
     },
-    'autonomous ai agent': {
-      title: 'Autonomous AI Agent',
+    'maijrun store': {
+      title: 'MAIJRUN Tech Store',
       demo: 'https://github.com/naimsmahmud50-dotcom/Maijrun-Teach',
       github: 'https://github.com/naimsmahmud50-dotcom/Maijrun-Teach',
       isLive: false,
-      category: 'AI & Automation'
+      category: 'Enterprise E-Commerce & PC Builder'
+    },
+    'maijrun tech': {
+      title: 'MAIJRUN Tech Store',
+      demo: 'https://github.com/naimsmahmud50-dotcom/Maijrun-Teach',
+      github: 'https://github.com/naimsmahmud50-dotcom/Maijrun-Teach',
+      isLive: false,
+      category: 'Enterprise E-Commerce & PC Builder'
+    },
+    'autonomous ai agent': {
+      title: 'MAIJRUN Tech Store',
+      demo: 'https://github.com/naimsmahmud50-dotcom/Maijrun-Teach',
+      github: 'https://github.com/naimsmahmud50-dotcom/Maijrun-Teach',
+      isLive: false,
+      category: 'Enterprise E-Commerce & PC Builder'
     },
     'travel with maijrun': {
       title: 'Travel with Maijrun',
@@ -66,7 +80,7 @@
   const PROJECTS_LIST = [
     PROJECTS_DB['madrasah ecosystem'],
     PROJECTS_DB['secure my pc'],
-    PROJECTS_DB['autonomous ai agent'],
+    PROJECTS_DB['maijrun store'],
     PROJECTS_DB['travel with maijrun'],
     PROJECTS_DB['arabic language & cultural club'],
     PROJECTS_DB['student life circle'],
@@ -315,7 +329,7 @@
           <div style="color:#00e5ff; font-weight:bold; margin-bottom:6px;">── 7 PRODUCTION PROJECTS ──</div>
           <div>1. <a href="https://github.com/naimsmahmud50-dotcom/Madrasha-Managemant-Softaware" target="_blank" style="color:#00ff88; text-decoration:underline;">Madrasah Ecosystem</a> - Multi-tenant institution management platform</div>
           <div>2. <a href="https://github.com/naimsmahmud50-dotcom/MindPulse" target="_blank" style="color:#00ff88; text-decoration:underline;">Secure My PC</a> - Defensive desktop security &amp; authorization platform</div>
-          <div>3. <a href="https://github.com/naimsmahmud50-dotcom/Maijrun-Teach" target="_blank" style="color:#00ff88; text-decoration:underline;">Autonomous AI Agent</a> - Self-healing autonomous task orchestration</div>
+          <div>3. <a href="https://github.com/naimsmahmud50-dotcom/Maijrun-Teach" target="_blank" style="color:#00ff88; text-decoration:underline;">MAIJRUN Tech Store</a> - Enterprise tech e-commerce &amp; custom PC builder platform</div>
           <div>4. <a href="https://travel-w-ith-maijrun-alpha.vercel.app" target="_blank" style="color:#00ff88; text-decoration:underline;">Travel with Maijrun</a> - Live enterprise travel booking portal</div>
           <div>5. <a href="https://arabic-langualge-and-cultural-club.vercel.app" target="_blank" style="color:#00ff88; text-decoration:underline;">Arabic Language &amp; Cultural Club</a> - Interactive learning community platform</div>
           <div>6. <a href="https://github.com/naimsmahmud50-dotcom/Student-Life-Circle" target="_blank" style="color:#00ff88; text-decoration:underline;">Student Life Circle</a> - Campus networking &amp; productivity ecosystem</div>
