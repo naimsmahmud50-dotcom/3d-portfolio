@@ -530,7 +530,7 @@
 
   // 7. Initialize All Modules
   
-  // 8. About Section Cybersecurity & Portrait Restoration (Pillar 2)
+  // 8. About Section: Full Stack Developer & AI Automation Expert + Portrait Display
   function setupAboutSection() {
     function alignPortraitBelowPlate() {
       const plate = document.querySelector("._5tgptW_plate, [class*='_5tgptW_plate']");
@@ -544,23 +544,35 @@
           pane.style.setProperty('max-height', maxAvailHeight + 'px', 'important');
         }
 
-        // Active Portrait Image Assurance inside the 3D Arch
+        // Active Portrait Image Assurance: Render Mahmud Hasan's real photo directly
         let img = pane.querySelector("img");
         if (!img) {
           img = document.createElement("img");
           img.className = "_5tgptW_portrait mh-portrait-img";
-          img.alt = "Portrait of Mahmud Hasan";
-          img.src = "/assets/mahmudascii.webp";
+          img.alt = "Mahmud Hasan - Full Stack Developer & AI Automation Expert";
+          img.src = "/assets/mahmud.jpg";
           pane.appendChild(img);
-        } else if (!img.src || img.src.includes("aengel.io") || img.src.includes("404")) {
-          img.src = "/assets/mahmudascii.webp";
+        } else {
+          if (img.hasAttribute("srcset")) {
+            img.removeAttribute("srcset");
+          }
+          if (!img.src || !img.src.includes("/assets/mahmud.jpg")) {
+            img.src = "/assets/mahmud.jpg";
+          }
         }
         img.style.setProperty('display', 'block', 'important');
         img.style.setProperty('opacity', '1', 'important');
         img.style.setProperty('visibility', 'visible', 'important');
+        img.style.setProperty('object-fit', 'cover', 'important');
+        img.style.setProperty('object-position', 'center top', 'important');
+        img.style.setProperty('width', '100%', 'important');
+        img.style.setProperty('height', '100%', 'important');
+
         pane.style.setProperty('opacity', '1', 'important');
         pane.style.setProperty('clip-path', 'none', 'important');
         pane.style.setProperty('visibility', 'visible', 'important');
+        pane.style.setProperty('display', 'block', 'important');
+        pane.style.setProperty('background', '#090e17', 'important');
       }
     }
 
@@ -569,28 +581,41 @@
       if (document.querySelector('button[data-testid="loader-enter"]')) return;
 
       const aboutRoot = document.querySelector("._5tgptW_root, [class*='_5tgptW_root']");
-      if (aboutRoot && !document.getElementById("mh-about-security-seal")) {
+      if (aboutRoot) {
+        // 1. Update Subtitle to Full Stack Developer & AI Automation Expert
+        const subtitle = aboutRoot.querySelector("._5tgptW_subtitle, [class*='_5tgptW_subtitle']");
+        if (subtitle && !subtitle.textContent.includes("FULL STACK")) {
+          subtitle.textContent = "FULL STACK DEVELOPER • AI AUTOMATION EXPERT";
+        }
+
+        // 2. Update Lead Text cleanly with Mahmud's Core Focus
         const lead = aboutRoot.querySelector("._5tgptW_lead, [class*='_5tgptW_lead']");
-        if (lead) {
-          const sealContainer = document.createElement("div");
-          sealContainer.id = "mh-about-security-seal";
-          sealContainer.style.pointerEvents = "auto";
-          sealContainer.style.marginTop = "8px";
-          sealContainer.innerHTML = `
-            <div class="mh-security-badge">
-              <span class="shield-icon">🛡️</span>
-              <span>VERIFIED SECURITY SPECIALIST • ARENA WEB SECURITY CERTIFIED</span>
-            </div>
+        const targetLead = "Specializing in end-to-end full stack web platforms, autonomous AI agent workflows, and resilient mobile application engineering. Dedicated to transforming complex engineering challenges into secure, scalable digital products.";
+        if (lead && lead.textContent !== targetLead) {
+          lead.textContent = targetLead;
+        }
+
+        // 3. Render clean, sleek skills grid
+        if (!document.getElementById("mh-about-skills-container")) {
+          const oldSeal = document.getElementById("mh-about-security-seal");
+          if (oldSeal) oldSeal.remove();
+
+          const skillsContainer = document.createElement("div");
+          skillsContainer.id = "mh-about-skills-container";
+          skillsContainer.style.pointerEvents = "auto";
+          skillsContainer.style.marginTop = "12px";
+          skillsContainer.innerHTML = `
             <div class="mh-skills-grid">
-              <span class="mh-skill-chip">🤖 LangChain / AI Swarms</span>
-              <span class="mh-skill-chip">⚡ Next.js / React</span>
-              <span class="mh-skill-chip">📱 Flutter / Android SDK</span>
-              <span class="mh-skill-chip">🛡️ Penetration Testing &amp; OWASP</span>
-              <span class="mh-skill-chip">⚙️ Node.js / TypeScript</span>
-              <span class="mh-skill-chip">💬 WhatsApp Automation</span>
+              <span class="mh-skill-chip"><span class="chip-dot"></span>⚡ Full Stack Development (Next.js / Node.js / React)</span>
+              <span class="mh-skill-chip"><span class="chip-dot"></span>🤖 AI Automation &amp; Agent Swarms (LangChain / Python)</span>
+              <span class="mh-skill-chip"><span class="chip-dot"></span>📱 Mobile App Development (Flutter / Android SDK)</span>
+              <span class="mh-skill-chip"><span class="chip-dot"></span>💬 Business Automation (WhatsApp API &amp; Webhooks)</span>
+              <span class="mh-skill-chip"><span class="chip-dot"></span>🛡️ Web Security &amp; Vulnerability Assessment (OWASP)</span>
             </div>
           `;
-          lead.parentNode.insertBefore(sealContainer, lead.nextSibling);
+          if (lead) {
+            lead.parentNode.insertBefore(skillsContainer, lead.nextSibling);
+          }
         }
       }
       alignPortraitBelowPlate();
