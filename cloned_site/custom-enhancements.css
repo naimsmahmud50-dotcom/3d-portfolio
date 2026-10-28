@@ -56,6 +56,10 @@
   pointer-events: none !important;
 }
 
+.y9w63G_gate {
+  cursor: pointer !important;
+}
+
 .y9w63G_gate .y9w63G_status,
 .y9w63G_exiting .y9w63G_status {
   opacity: 0 !important;
