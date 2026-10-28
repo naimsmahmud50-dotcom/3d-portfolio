@@ -1,0 +1,35 @@
+{
+  "version": 2,
+  "outputDirectory": "cloned_site",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/api/lite-cards",
+      "headers": [
+        { "key": "Content-Type", "value": "application/json; charset=utf-8" },
+        { "key": "Access-Control-Allow-Origin", "value": "*" }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET, POST, OPTIONS" }
+      ]
+    }
+  ],
+  "rewrites": [
+    { "source": "/api/telemetry/:path*", "destination": "/api/lite-cards" },
+    { "source": "/cdn-cgi/:path*", "destination": "/api/lite-cards" },
+    { "source": "/api/lite-cards", "destination": "/api/lite-cards" },
+    { "source": "/lite/:slug*", "destination": "/lite.html" },
+    { "source": "/lite", "destination": "/lite.html" },
+    { "source": "/projects/:slug*", "destination": "/index.html" },
+    { "source": "/projects", "destination": "/index.html" },
+    { "source": "/about", "destination": "/index.html" },
+    { "source": "/contact", "destination": "/index.html" },
+    { "source": "/assets/:path*", "destination": "https://assets.aengel.io/:path*" },
+    { "source": "/:path((?!_next|assets|custom-enhancements|favicon|icon).*)*", "destination": "https://aengel.io/:path*" }
+  ]
+}
