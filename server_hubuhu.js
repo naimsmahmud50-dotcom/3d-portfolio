@@ -30,9 +30,17 @@ const MIME_TYPES = {
 };
 
 function handleRequest(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', '*');
+  // Security Headers
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+
+  // Scoped CORS for static assets & APIs
+  if (req.url && (req.url.startsWith('/assets/') || req.url.startsWith('/_next/') || req.url.startsWith('/fonts/') || req.url.startsWith('/draco/') || req.url.startsWith('/api/'))) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', '*');
+  }
 
   if (req.method === 'OPTIONS') {
     res.writeHead(204);
@@ -40,8 +48,47 @@ function handleRequest(req, res) {
     return;
   }
 
-  const parsedUrl = new URL(req.url, `http://${req.headers.host}`);
-  let pathname = decodeURIComponent(parsedUrl.pathname);
+  let parsedUrl;
+  try {
+    parsedUrl = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
+  } catch (_) {
+    res.writeHead(400, { 'Content-Type': 'text/plain; charset=utf-8' });
+    res.end('Bad Request');
+    return;
+  }
+
+  let pathname;
+  try {
+    pathname = decodeURIComponent(parsedUrl.pathname);
+  } catch (_) {
+    res.writeHead(400, { 'Content-Type': 'text/plain; charset=utf-8' });
+    res.end('Bad Request: Malformed URI');
+    return;
+  }
+
+  // Prevent null-byte injection
+  if (pathname.includes('\0')) {
+    res.writeHead(400, { 'Content-Type': 'text/plain; charset=utf-8' });
+    res.end('Bad Request');
+    return;
+  }
+
+  // Path traversal prevention: block '..' patterns and strictly enforce resolved path under BASE_DIR
+  if (req.url.includes('..') || pathname.includes('..')) {
+    res.writeHead(403, { 'Content-Type': 'text/plain; charset=utf-8' });
+    res.end('Forbidden: Path Traversal Detected');
+    return;
+  }
+
+  const normalizedRelPath = path.normalize('/' + pathname);
+  const safePath = path.resolve(BASE_DIR, '.' + normalizedRelPath);
+  const resolvedBaseDir = path.resolve(BASE_DIR);
+
+  if (!safePath.startsWith(resolvedBaseDir)) {
+    res.writeHead(403, { 'Content-Type': 'text/plain; charset=utf-8' });
+    res.end('Forbidden: Path Traversal Detected');
+    return;
+  }
 
   // Stub telemetry & Cloudflare RUM endpoints
   if (pathname.startsWith('/api/telemetry') || pathname.startsWith('/cdn-cgi/')) {
@@ -126,8 +173,8 @@ function handleRequest(req, res) {
     }
   }
 
-  // Local file mapping
-  let localPath = path.join(BASE_DIR, pathname);
+  // Local file mapping (using sanitized safePath)
+  let localPath = safePath;
 
   if (fs.existsSync(localPath) && fs.statSync(localPath).isDirectory()) {
     const dirIndex = path.join(localPath, 'index.html');
@@ -196,13 +243,15 @@ function handleRequest(req, res) {
       }
       res.writeHead(200, { 'Content-Type': contentType });
 
-      // Cache static assets (except dynamic query endpoints like /_next/image)
-      if (!pathname.includes('image') && !parsedUrl.search) {
+      // Cache static assets safely (only under approved asset folders inside BASE_DIR)
+      if (!pathname.includes('image') && !parsedUrl.search && (normalizedRelPath.startsWith('/_next/') || normalizedRelPath.startsWith('/assets/'))) {
         try {
           const dir = path.dirname(localPath);
-          if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-          const fileStream = fs.createWriteStream(localPath);
-          remoteRes.pipe(fileStream);
+          if (dir.startsWith(resolvedBaseDir)) {
+            if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+            const fileStream = fs.createWriteStream(localPath);
+            remoteRes.pipe(fileStream);
+          }
         } catch (_) {}
       }
 
@@ -226,8 +275,8 @@ function handleRequest(req, res) {
 const PORTS = [3000, 3001];
 PORTS.forEach((port) => {
   const srv = http.createServer(handleRequest);
-  srv.listen(port, '0.0.0.0', () => {
-    console.log(`⚡ 3D Portfolio running on 👉 http://localhost:${port}`);
+  srv.listen(port, '127.0.0.1', () => {
+    console.log(`⚡ 3D Portfolio running on 👉 http://127.0.0.1:${port}`);
   });
   srv.on('error', (err) => {
     console.warn(`Warning: Could not bind port ${port}:`, err.message);

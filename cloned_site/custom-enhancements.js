@@ -1022,7 +1022,19 @@
           if (href) {
             e.preventDefault();
             e.stopPropagation();
-            window.location.assign(href);
+            try {
+              // Sanitize and validate navigation target to prevent XSS / javascript: execution
+              const parsed = new URL(href, window.location.origin);
+              if (parsed.protocol === 'http:' || parsed.protocol === 'https:') {
+                if (parsed.origin === window.location.origin) {
+                  window.location.assign(parsed.pathname + parsed.search + parsed.hash);
+                } else {
+                  window.open(parsed.href, '_blank', 'noopener,noreferrer');
+                }
+              }
+            } catch (_) {
+              // Ignore invalid or dangerous URI schemes (e.g. javascript:)
+            }
             return;
           }
         }

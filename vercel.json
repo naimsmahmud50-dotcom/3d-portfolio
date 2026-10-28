@@ -13,24 +13,28 @@
       ]
     },
     {
-      "source": "/assets/(.*)",
+      "source": "/(assets|fonts|draco|images)/:path*",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" },
-        { "key": "Access-Control-Allow-Origin", "value": "*" }
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET, OPTIONS" }
       ]
     },
     {
       "source": "/api/lite-cards",
       "headers": [
         { "key": "Content-Type", "value": "application/json; charset=utf-8" },
-        { "key": "Access-Control-Allow-Origin", "value": "*" }
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET, OPTIONS" }
       ]
     },
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "Access-Control-Allow-Origin", "value": "*" },
-        { "key": "Access-Control-Allow-Methods", "value": "GET, POST, OPTIONS" }
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
       ]
     }
   ],
@@ -46,7 +50,6 @@
     { "source": "/api/lite-cards", "destination": "/api/lite-cards" },
     { "source": "/lite/:slug*", "destination": "/lite.html" },
     { "source": "/lite", "destination": "/lite.html" },
-    { "source": "/assets/:path*", "destination": "https://assets.aengel.io/:path*" },
-    { "source": "/:path((?!_next|assets|custom-enhancements|favicon|icon).*)*", "destination": "https://aengel.io/:path*" }
+    { "source": "/assets/:path*", "destination": "https://assets.aengel.io/:path*" }
   ]
 }
