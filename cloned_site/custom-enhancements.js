@@ -525,7 +525,7 @@
 
   // 7. Initialize All Modules
   
-  // 8. About Section Cybersecurity & Skills Enhancement (Pillar 2)
+  // 8. About Section Cybersecurity & Portrait Restoration (Pillar 2)
   function setupAboutSection() {
     function alignPortraitBelowPlate() {
       const plate = document.querySelector("._5tgptW_plate, [class*='_5tgptW_plate']");
@@ -538,6 +538,24 @@
           const maxAvailHeight = Math.max(260, window.innerHeight - targetTop - 65);
           pane.style.setProperty('max-height', maxAvailHeight + 'px', 'important');
         }
+
+        // Active Portrait Image Assurance inside the 3D Arch
+        let img = pane.querySelector("img");
+        if (!img) {
+          img = document.createElement("img");
+          img.className = "_5tgptW_portrait mh-portrait-img";
+          img.alt = "Portrait of Mahmud Hasan";
+          img.src = "/assets/mahmudascii.webp";
+          pane.appendChild(img);
+        } else if (!img.src || img.src.includes("aengel.io") || img.src.includes("404")) {
+          img.src = "/assets/mahmudascii.webp";
+        }
+        img.style.setProperty('display', 'block', 'important');
+        img.style.setProperty('opacity', '1', 'important');
+        img.style.setProperty('visibility', 'visible', 'important');
+        pane.style.setProperty('opacity', '1', 'important');
+        pane.style.setProperty('clip-path', 'none', 'important');
+        pane.style.setProperty('visibility', 'visible', 'important');
       }
     }
 
@@ -574,6 +592,44 @@
     }, 200);
 
     window.addEventListener('resize', alignPortraitBelowPlate);
+  }
+
+  // 9. Footer Cleanup (Remove Legal notice & Lab) & Authentic WhatsApp Direct Integration
+  function setupFooterAndSocialsClean() {
+    function cleanElements() {
+      // 1. Remove Legal Notice and Lab from footers
+      document.querySelectorAll('._8VLL1W_legal, ._8VLL1W_lab, a[href*="legal-notice"], a[href$="/legal-notice"]').forEach(el => {
+        el.remove();
+      });
+
+      // 2. Remove any Twitter / X links
+      document.querySelectorAll('a[href*="twitter.com"], a[href*="x.com"]').forEach(el => {
+        el.remove();
+      });
+
+      // 3. Ensure authentic WhatsApp link & icon
+      const waLinks = document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]');
+      const waSvgPath = "M128,24A104,104,0,0,0,36.18,176.88L24.83,218.35a16,16,0,0,0,19.5,19.5l41.47-11.35A104,104,0,1,0,128,24Zm0,192a87.87,87.87,0,0,1-44.06-11.81,8,8,0,0,0-6-1.07l-35.32,9.66,9.66-35.32a8,8,0,0,0-1.07-6A88,88,0,1,1,128,216Zm45.27-60.77-17.5-8.24a16.07,16.07,0,0,0-16.15,2.15l-6.84,5.47a56.4,56.4,0,0,1-24.36-24.36l5.47-6.84a16.07,16.07,0,0,0,2.15-16.15l-8.24-17.5A16,16,0,0,0,93.41,86a24,24,0,0,0-19.14,24c1,54.81,45.47,99.28,100.28,100.28a24,24,0,0,0,24-19.14A16,16,0,0,0,173.27,155.23Z";
+
+      waLinks.forEach(link => {
+        link.classList.add('mh-whatsapp-link');
+        link.setAttribute('aria-label', 'WhatsApp (+8801767850859)');
+        link.setAttribute('title', 'Chat on WhatsApp: +8801767850859');
+        link.setAttribute('href', 'https://wa.me/8801767850859');
+
+        const svg = link.querySelector('svg');
+        if (svg) {
+          svg.setAttribute('viewBox', '0 0 256 256');
+          const path = svg.querySelector('path');
+          if (path && path.getAttribute('d') !== waSvgPath) {
+            path.setAttribute('d', waSvgPath);
+          }
+        }
+      });
+    }
+
+    cleanElements();
+    setInterval(cleanElements, 200);
   }
 
   // 7. Contact 3D Cinematic Interaction Engine
@@ -954,6 +1010,7 @@
     setupEnterButtonFailsafe();
     setupProjectInteriorExitHud();
     setupAboutSection();
+    setupFooterAndSocialsClean();
     setupEmailCopy();
     // initDhakaClock(); removed
     setupTerminal();

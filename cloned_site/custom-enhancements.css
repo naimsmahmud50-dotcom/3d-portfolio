@@ -727,27 +727,40 @@ html[data-route*="lite"] .y9w63G_loaderContainer,
   transform: translateY(-2px) !important;
 }
 
-/* 4. Position Portrait Picture cleanly BELOW the MAHMUD HASAN plate */
+/* 4. Position Portrait Picture cleanly inside 3D About Arch */
 ._5tgptW_portraitPane {
-  top: clamp(395px, 42vh, 455px) !important;
-  max-height: 45vh !important;
-  border-radius: 18px !important;
-  border: 1.5px solid rgba(0, 229, 255, 0.4) !important;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), 0 0 30px rgba(0, 229, 255, 0.22) !important;
+  top: clamp(390px, 42vh, 460px) !important;
+  max-height: 46vh !important;
+  border-radius: 20px !important;
+  border: 1.5px solid rgba(0, 229, 255, 0.45) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), 0 0 35px rgba(0, 229, 255, 0.25) !important;
   overflow: hidden !important;
-  z-index: 5 !important;
+  z-index: 6 !important;
+  opacity: 1 !important;
+  clip-path: none !important;
+  display: block !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  background: radial-gradient(circle at 50% 30%, rgba(0, 229, 255, 0.08) 0%, rgba(8, 14, 24, 0.96) 100%) !important;
   transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
 }
 
 ._5tgptW_portraitPane:hover {
   border-color: var(--mh-cyan) !important;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.9), 0 0 45px rgba(0, 229, 255, 0.5) !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.95), 0 0 45px rgba(0, 229, 255, 0.5) !important;
   transform: scale(1.02) !important;
 }
 
-._5tgptW_portrait {
-  border-radius: 16px !important;
-  filter: contrast(1.05) brightness(1.02) !important;
+._5tgptW_portrait,
+.mh-portrait-img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  border-radius: 18px !important;
+  filter: contrast(1.08) brightness(1.04) drop-shadow(0 4px 16px rgba(0, 0, 0, 0.6)) !important;
 }
 
 /* 5. Refine ID Card Plate */
@@ -1104,4 +1117,98 @@ body:has([class*="loaderContainer"]:not([class*="exiting"]):not([style*="display
   display: none !important;
   opacity: 0 !important;
   pointer-events: none !important;
+}
+
+/* ==========================================================================
+   13. FOOTER CLEANUP (REMOVE LEGAL NOTICE & LAB) & AUTHENTIC WHATSAPP
+   ========================================================================== */
+._8VLL1W_legal,
+._8VLL1W_lab,
+a[href*="legal-notice"],
+a[href$="/legal-notice"],
+a[class*="_8VLL1W_legal"],
+a[class*="_8VLL1W_lab"] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  position: absolute !important;
+  left: -9999px !important;
+}
+
+/* Authentic WhatsApp Cyber Accent */
+.mh-whatsapp-link,
+a[href*="wa.me"],
+a[href*="whatsapp"] {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+}
+
+.mh-whatsapp-link:hover,
+a[href*="wa.me"]:hover,
+a[href*="whatsapp"]:hover {
+  color: #25D366 !important;
+  filter: drop-shadow(0 0 12px rgba(37, 211, 102, 0.85)) !important;
+  transform: scale(1.15) translateY(-2px) !important;
+}
+
+/* ==========================================================================
+   14. MOBILE COMPACT VIEWPORT POLISH (< 480px)
+   ========================================================================== */
+@media screen and (max-width: 480px) {
+  /* Ultra-compact navbar for mobile phones */
+  ._rHu7W_nav {
+    padding-inline: 12px !important;
+    padding-block: 0.75rem !important;
+  }
+  ._rHu7W_availability {
+    font-size: 10px !important;
+    padding: 5px 10px !important;
+    letter-spacing: 0.05em !important;
+  }
+  /* Skills grid wrapping cleanly */
+  .mh-skills-grid {
+    gap: 5px !important;
+  }
+  .mh-skill-chip {
+    font-size: 9.5px !important;
+    padding: 3px 8px !important;
+  }
+  /* Security badge responsive */
+  .mh-security-badge {
+    font-size: 9.5px !important;
+    padding: 4px 10px !important;
+    max-width: 100% !important;
+  }
+  /* Portrait on mobile */
+  ._5tgptW_portraitPane {
+    max-height: 38vh !important;
+  }
+  /* Reach out & socials spacing */
+  .oQ_U9W_socials,
+  ._7ZPv2G_socials {
+    gap: 14px !important;
+  }
+  .oQ_U9W_socialLink,
+  ._7ZPv2G_socialLink {
+    width: 36px !important;
+    height: 36px !important;
+  }
+  /* Cyber terminal mobile optimization */
+  #mh-terminal-toggle {
+    bottom: 12px !important;
+    height: 34px !important;
+    padding: 0 14px !important;
+    font-size: 11px !important;
+  }
+  .mh-terminal-window {
+    width: 96% !important;
+    bottom: 54px !important;
+  }
 }
