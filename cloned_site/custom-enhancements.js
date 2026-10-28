@@ -509,22 +509,31 @@
   // 6. Contact Hub removed to prevent any UI collisions with MH logo
   // 6.1 Initial Direct Route Auto-Glide
   function setupRouteAutoGlide() {
-    const path = window.location.pathname;
-    if (path === '/about' || path === '/contact' || path === '/projects') {
-      const timer = setInterval(() => {
-        const enterBtn = document.querySelector('button[data-testid="loader-enter"]');
-        if (!enterBtn) {
-          clearInterval(timer);
-          setTimeout(() => {
-            const links = Array.from(document.querySelectorAll('a._rHu7W_link, [class*="_rHu7W_link"]'));
-            const target = path === '/about' ? 'ABOUT' : path === '/contact' ? 'CONTACT' : 'PROJECTS';
-            const link = links.find(l => (l.innerText || l.textContent || '').trim() === target);
-            if (link) {
-              link.click();
-            }
-          }, 1000);
-        }
-      }, 300);
+    try {
+      const path = window.location.pathname;
+      const params = new URLSearchParams(window.location.search || '');
+      const glide = params.get('glide') || '';
+      const target = (path === '/about' || glide === 'about') ? 'ABOUT' :
+                     (path === '/contact' || glide === 'contact') ? 'CONTACT' :
+                     (path === '/projects' || glide === 'projects') ? 'PROJECTS' : null;
+
+      if (target) {
+        const timer = setInterval(() => {
+          const enterBtn = document.querySelector('button[data-testid="loader-enter"]');
+          if (!enterBtn) {
+            clearInterval(timer);
+            setTimeout(() => {
+              const links = Array.from(document.querySelectorAll('a._rHu7W_link, [class*="_rHu7W_link"]'));
+              const link = links.find(l => (l.innerText || l.textContent || '').trim().toUpperCase() === target);
+              if (link) {
+                link.click();
+              }
+            }, 800);
+          }
+        }, 300);
+      }
+    } catch (err) {
+      console.warn('Glide handler notice:', err);
     }
   }
 
@@ -953,27 +962,53 @@
             return;
           }
 
-          if (label === 'PROJECTS' || href === '/projects' || (href && href.startsWith('/projects/'))) {
+          if (label === 'PROJECTS' || href === '/projects') {
             e.preventDefault();
             e.stopPropagation();
-            const target = (window.innerWidth > 768) ? (href.includes('?') ? href : href + '?variant=full') : href;
-            window.location.assign(target);
+            if (window.innerWidth > 768) {
+              window.location.assign('/?variant=full&glide=projects');
+            } else {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
             return;
           }
 
           if (label === 'ABOUT' || href === '/about') {
             e.preventDefault();
             e.stopPropagation();
-            const target = (window.innerWidth > 768) ? '/about?variant=full' : '/about';
-            window.location.assign(target);
+            if (window.innerWidth > 768) {
+              window.location.assign('/?variant=full&glide=about');
+            } else {
+              showToast('Mahmud Hasan — Full Stack Developer & AI Automation Expert');
+            }
             return;
           }
 
           if (label === 'CONTACT' || href === '/contact') {
             e.preventDefault();
             e.stopPropagation();
-            const target = (window.innerWidth > 768) ? '/contact?variant=full' : '/contact';
-            window.location.assign(target);
+            if (window.innerWidth > 768) {
+              window.location.assign('/?variant=full&glide=contact');
+            } else {
+              window.open('https://wa.me/8801767850859?text=Hi%20Mahmud,%20I%20saw%20your%20portfolio!', '_blank');
+            }
+            return;
+          }
+
+          // Intercept any project detail route clicks on Lite to open direct demo/github
+          if (href && href.startsWith('/projects/')) {
+            e.preventDefault();
+            e.stopPropagation();
+            const slug = href.replace('/projects/', '').replace(/-/g, ' ').toLowerCase();
+            let matched = null;
+            for (const [k, p] of Object.entries(PROJECTS_DB)) {
+              if (slug.includes(k) || k.includes(slug)) {
+                matched = p;
+                break;
+              }
+            }
+            const destination = matched?.demo || matched?.github || 'https://github.com/naimsmahmud50-dotcom';
+            window.open(destination, '_blank', 'noopener,noreferrer');
             return;
           }
 
@@ -1060,7 +1095,21 @@
     }
   }
 
+  // 11. Error Boundary Auto-Recovery Guardian
+  function setupErrorRecoveryGuardian() {
+    function checkError() {
+      const errorRoot = document.querySelector('.mbP0PG_root, [class*="mbP0PG_root"]');
+      if (errorRoot) {
+        console.warn('⚠️ Error screen detected. Auto-recovering to stable view...');
+        const target = (window.innerWidth <= 768) ? '/lite' : '/?variant=full';
+        window.location.replace(target);
+      }
+    }
+    setInterval(checkError, 400);
+  }
+
   function init() {
+    setupErrorRecoveryGuardian();
     setupLiteNavigation();
     setupMenuLabelSync();
     setupEnterButtonFailsafe();

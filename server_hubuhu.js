@@ -91,17 +91,30 @@ function handleRequest(req, res) {
     }
   }
 
-  // Handle SPA page routes (/, /about, /contact, /projects, /projects/*)
-  const isPageNavigation = !path.extname(pathname) && (
-    pathname === '/' ||
-    pathname === '/index.html' ||
-    pathname === '/about' ||
-    pathname === '/contact' ||
-    pathname === '/projects' ||
-    pathname.startsWith('/projects/')
-  );
+  // Mirror Vercel route redirects to avoid Next.js React error #412 hydration mismatch
+  if (pathname === '/about') {
+    res.writeHead(307, { 'Location': '/?glide=about' });
+    res.end();
+    return;
+  }
+  if (pathname === '/projects') {
+    res.writeHead(307, { 'Location': '/?glide=projects' });
+    res.end();
+    return;
+  }
+  if (pathname === '/contact') {
+    res.writeHead(307, { 'Location': '/?glide=contact' });
+    res.end();
+    return;
+  }
+  if (pathname.startsWith('/projects/')) {
+    res.writeHead(307, { 'Location': '/lite' });
+    res.end();
+    return;
+  }
 
-  if (isPageNavigation) {
+  // Handle root SPA page route
+  if (pathname === '/' || pathname === '/index.html') {
     const indexPath = path.join(BASE_DIR, 'index.html');
     if (fs.existsSync(indexPath)) {
       res.writeHead(200, {
