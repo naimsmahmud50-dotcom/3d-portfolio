@@ -74,6 +74,13 @@
       github: 'https://github.com/naimsmahmud50-dotcom/Facebook-Automation-',
       isLive: false,
       category: 'AI & Bot Automation'
+    },
+    'linkedin automation': {
+      title: 'LinkedIn Automation',
+      demo: 'https://github.com/naimsmahmud50-dotcom/Linkdin-Automation-',
+      github: 'https://github.com/naimsmahmud50-dotcom/Linkdin-Automation-',
+      isLive: false,
+      category: 'Autonomous AI Growth & Lead Engine'
     }
   };
 
@@ -84,7 +91,8 @@
     PROJECTS_DB['travel with maijrun'],
     PROJECTS_DB['arabic language & cultural club'],
     PROJECTS_DB['student life circle'],
-    PROJECTS_DB['facebook automation']
+    PROJECTS_DB['facebook automation'],
+    PROJECTS_DB['linkedin automation']
   ];
 
   // 1. Toast Notification Helper
@@ -326,7 +334,7 @@
 
       case 'projects':
         response.innerHTML = `
-          <div style="color:#00e5ff; font-weight:bold; margin-bottom:6px;">── 7 PRODUCTION PROJECTS ──</div>
+          <div style="color:#00e5ff; font-weight:bold; margin-bottom:6px;">── 8 PRODUCTION PROJECTS ──</div>
           <div>1. <a href="https://github.com/naimsmahmud50-dotcom/Madrasha-Managemant-Softaware" target="_blank" style="color:#00ff88; text-decoration:underline;">Madrasah Ecosystem</a> - Multi-tenant institution management platform</div>
           <div>2. <a href="https://github.com/naimsmahmud50-dotcom/MindPulse" target="_blank" style="color:#00ff88; text-decoration:underline;">Secure My PC</a> - Defensive desktop security &amp; authorization platform</div>
           <div>3. <a href="https://github.com/naimsmahmud50-dotcom/Maijrun-Teach" target="_blank" style="color:#00ff88; text-decoration:underline;">MAIJRUN Tech Store</a> - Enterprise tech e-commerce &amp; custom PC builder platform</div>
@@ -334,6 +342,7 @@
           <div>5. <a href="https://arabic-langualge-and-cultural-club.vercel.app" target="_blank" style="color:#00ff88; text-decoration:underline;">Arabic Language &amp; Cultural Club</a> - Interactive learning community platform</div>
           <div>6. <a href="https://github.com/naimsmahmud50-dotcom/Student-Life-Circle" target="_blank" style="color:#00ff88; text-decoration:underline;">Student Life Circle</a> - Campus networking &amp; productivity ecosystem</div>
           <div>7. <a href="https://github.com/naimsmahmud50-dotcom/Facebook-Automation-" target="_blank" style="color:#00ff88; text-decoration:underline;">Facebook Automation</a> - Meta Graph API automated marketing bot</div>
+          <div>8. <a href="https://github.com/naimsmahmud50-dotcom/Linkdin-Automation-" target="_blank" style="color:#00ff88; text-decoration:underline;">LinkedIn Automation</a> - Autonomous AI growth, lead generation &amp; Telegram bot control</div>
         `;
         break;
 

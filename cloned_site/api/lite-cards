@@ -380,6 +380,62 @@
           "aspect": 1.7777777777777777
         }
       ]
+    },
+    {
+      "slug": "linkedin-automation",
+      "name": "LinkedIn Automation",
+      "nameInk": "#e0e0e0",
+      "image": "/assets/HeroImg-LinkedIn Automation-1600x900.webp",
+      "ogImage": {
+        "url": "/assets/HeroImg-LinkedIn Automation.webp",
+        "alt": "LinkedIn Automation Tool",
+        "width": 2560,
+        "height": 1440
+      },
+      "editorial": {
+        "overline": "Project 8",
+        "title": "LinkedIn Automation",
+        "year": 2026,
+        "tagline": "Autonomous LinkedIn Growth & AI Lead Generation Engine with Telegram Bot Control",
+        "description": "Production-grade autonomous Python automation ecosystem combining Playwright stealth browser automation, Gemini AI content generation, automated YouTube trend synthesis, intelligent lead persona evaluation, and mobile Telegram bot remote control.",
+        "roleTitles": [
+          "lead automation engineer",
+          "python architect"
+        ],
+        "roleDescription": "Architected the 3-tier decoupled automation pipeline (Telegram Controller, Gemini Content Engine, Playwright Stealth Automator) with SQLite state management and human-like behavioral fuzzing.",
+        "stack": [
+          "Python 3.12",
+          "Playwright",
+          "Google Gemini AI",
+          "Telegram Bot API",
+          "SQLite",
+          "AsyncIO"
+        ],
+        "challenges": "Bypassing advanced bot detection algorithms via anti-fingerprinting stealth utilities, randomized human-like typing delays, viewport jitter, and strict rate-limiting (25 connections/day) without risking account restriction.",
+        "liveUrl": "https://github.com/naimsmahmud50-dotcom/Linkdin-Automation-"
+      },
+      "gallery": [
+        {
+          "url": "/assets/CarouselImg1-LinkedIn Automation.webp",
+          "alt": "Playwright Stealth Engine & Telegram Controller",
+          "aspect": 1.7777777777777777
+        },
+        {
+          "url": "/assets/CarouselImg2-LinkedIn Automation.webp",
+          "alt": "Gemini AI Content Generator & Trend Synthesizer",
+          "aspect": 1.7777777777777777
+        },
+        {
+          "url": "/assets/CarouselImg3-LinkedIn Automation.webp",
+          "alt": "Stealth Anti-Detection & Rate-Limiting Engine",
+          "aspect": 1.7777777777777777
+        },
+        {
+          "url": "/assets/CarouselImg4-LinkedIn Automation.webp",
+          "alt": "SQLite Database & Mobile Telegram Approval Bot",
+          "aspect": 1.7777777777777777
+        }
+      ]
     }
   ]
 }
