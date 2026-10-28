@@ -64,10 +64,10 @@
     },
     'student life circle': {
       title: 'Student Life Circle',
-      demo: 'https://github.com/naimsmahmud50-dotcom/Student-Life-Circle',
+      demo: 'https://naimsmahmud50-dotcom.github.io/Student-Life-Circle/',
       github: 'https://github.com/naimsmahmud50-dotcom/Student-Life-Circle',
-      isLive: false,
-      category: 'Campus Networking & EdTech Platform'
+      isLive: true,
+      category: 'Campus Networking & EdTech Platform (Live on GitHub Pages)'
     },
     'facebook automation': {
       title: 'Facebook Automation',
@@ -341,7 +341,7 @@
           <div>3. <a href="https://github.com/naimsmahmud50-dotcom/Maijrun-Teach" target="_blank" style="color:#00ff88; text-decoration:underline;">MAIJRUN Tech Store</a> - Enterprise tech e-commerce &amp; custom PC builder platform</div>
           <div>4. <a href="https://travel-w-ith-maijrun-alpha.vercel.app" target="_blank" style="color:#00ff88; text-decoration:underline;">Travel with Maijrun</a> - Live enterprise travel booking portal</div>
           <div>5. <a href="https://arabic-langualge-and-cultural-club.vercel.app" target="_blank" style="color:#00ff88; text-decoration:underline;">Arabic Language &amp; Cultural Club</a> - Interactive learning community platform</div>
-          <div>6. <a href="https://github.com/naimsmahmud50-dotcom/Student-Life-Circle" target="_blank" style="color:#00ff88; text-decoration:underline;">Student Life Circle</a> - Campus networking &amp; productivity ecosystem</div>
+          <div>6. <a href="https://naimsmahmud50-dotcom.github.io/Student-Life-Circle/" target="_blank" style="color:#00ff88; text-decoration:underline;">Student Life Circle</a> - Campus networking &amp; productivity ecosystem (Live)</div>
           <div>7. <a href="https://github.com/naimsmahmud50-dotcom/Facebook-Automation-" target="_blank" style="color:#00ff88; text-decoration:underline;">Facebook Automation</a> - Meta Graph API automated marketing bot</div>
           <div>8. <a href="https://github.com/naimsmahmud50-dotcom/Linkdin-Automation-" target="_blank" style="color:#00ff88; text-decoration:underline;">LinkedIn Automation</a> - Autonomous AI growth, lead generation &amp; Telegram bot control</div>
         `;
