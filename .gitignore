@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Next.js build
+.next/
+out/
+
+# Backups & Archives
+backup-original/
+*.bak
+
+# Temporary frame captures and test scripts at root
+/*.png
+/scratch*
+/test_*.py
+/verify_*.py
+/*.txt
+/*.log
+
+# Environment files
+.env
+.env*.local
+
+# OS files
+.DS_Store
+Thumbs.db
