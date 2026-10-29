@@ -25,6 +25,19 @@ index_path = os.path.join(EXPORT_DIR, "index.html")
 shutil.copy2(index_path, os.path.join(EXPORT_DIR, "404.html"))
 print("✓ Created 404.html SPA router fallback")
 
+# 2.1 Create README.md for repo presentation
+with open(os.path.join(EXPORT_DIR, "README.md"), "w") as f:
+    f.write("""# 🌐 Mahmud Hasan — Official 3D Interactive Portfolio
+
+[![Live Portfolio](https://img.shields.io/badge/LIVE_PORTFOLIO-naimsmahmud50--dotcom.github.io-success?style=for-the-badge&logo=githubpages&logoColor=white)](https://naimsmahmud50-dotcom.github.io/)
+
+This repository hosts the live production build of Mahmud Hasan's interactive 3D WebGPU & Three.js portfolio.
+
+- **🌐 Live Production Website:** [https://naimsmahmud50-dotcom.github.io/](https://naimsmahmud50-dotcom.github.io/)
+- **💻 Source Code & Repository:** [https://github.com/naimsmahmud50-dotcom/Mahmud-Hasan-3D-Portfolio](https://github.com/naimsmahmud50-dotcom/Mahmud-Hasan-3D-Portfolio)
+""")
+print("✓ Created README.md")
+
 # 3. Create route directory structures for clean URLs (lite/, about/, projects/, contact/, legal-notice/)
 routes = ["lite", "about", "projects", "contact", "legal-notice"]
 for r in routes:
