@@ -1,10 +1,13 @@
 # 🚀 Mahmud Hasan — Next-Gen 3D WebGPU Portfolio
 
-[![Live Status](https://img.shields.io/badge/status-active-brightgreen.svg)]()
+[![Live Portfolio](https://img.shields.io/badge/LIVE_PORTFOLIO-naimsmahmud50--dotcom.github.io-success?style=for-the-badge&logo=githubpages&logoColor=white)](https://naimsmahmud50-dotcom.github.io/)
+
 [![Three.js](https://img.shields.io/badge/Three.js-r173-black?logo=three.js)]()
 [![Next.js](https://img.shields.io/badge/Next.js-14.2-black?logo=next.js)]()
 [![WebGPU](https://img.shields.io/badge/WebGPU-Enabled-blue.svg)]()
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38B2AC?logo=tailwind-css)]()
+
+> **🌐 Live Production Website:** [https://naimsmahmud50-dotcom.github.io/](https://naimsmahmud50-dotcom.github.io/)
 
 An award-winning, agency-grade immersive 3D developer portfolio and experiential showcase engineered with **Three.js**, **WebGPU**, **Next.js**, **GSAP**, and custom cybersecurity terminal enhancements.
 
@@ -63,8 +66,8 @@ An award-winning, agency-grade immersive 3D developer portfolio and experiential
 
 ```bash
 # Clone the repository
-git clone https://github.com/naimsmahmud50-dotcom/3d-portfolio.git
-cd 3d-portfolio
+git clone https://github.com/naimsmahmud50-dotcom/Mahmud-Hasan-3D-Portfolio.git
+cd Mahmud-Hasan-3D-Portfolio
 
 # Install dependencies
 pnpm install
