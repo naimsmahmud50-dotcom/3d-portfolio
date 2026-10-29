@@ -507,10 +507,20 @@
   }
 
   // 6. Contact Hub removed to prevent any UI collisions with MH logo
+  const getRepoBase = () => {
+    if (typeof window !== 'undefined') {
+      if (window.__REPO_BASE__) return window.__REPO_BASE__;
+      if (window.location.pathname.startsWith('/Mahmud-Hasan-3D-Portfolio')) return '/Mahmud-Hasan-3D-Portfolio';
+    }
+    return '';
+  };
+
   // 6.1 Initial Direct Route Auto-Glide
   function setupRouteAutoGlide() {
     try {
-      const path = window.location.pathname;
+      const base = getRepoBase();
+      const rawPath = window.location.pathname;
+      const path = (base && rawPath.startsWith(base)) ? (rawPath.slice(base.length) || '/') : rawPath;
       const params = new URLSearchParams(window.location.search || '');
       const glide = params.get('glide') || '';
       const target = (path === '/about' || glide === 'about') ? 'ABOUT' :
@@ -904,7 +914,10 @@
 
   // 10. Direct Instant Lite Version Experience Engine & Navigation Bridge
   function setupLiteNavigation() {
-    const isLite = window.location.pathname.startsWith('/lite');
+    const base = getRepoBase();
+    const rawPath = window.location.pathname;
+    const currentPath = (base && rawPath.startsWith(base)) ? (rawPath.slice(base.length) || '/') : rawPath;
+    const isLite = currentPath.startsWith('/lite');
     if (isLite) {
       document.body.classList.add('is-lite');
       const hideLoader = () => {
@@ -927,18 +940,19 @@
       if (liteLink) {
         e.preventDefault();
         e.stopPropagation();
-        window.location.assign('/lite');
+        window.location.assign(base + '/lite');
         return;
       }
 
       // 2. Navigation when on Lite page: 3-dot menu buttons, logo, and footer links
-      if (window.location.pathname.startsWith('/lite')) {
+      const onLitePage = currentPath.startsWith('/lite') || window.location.pathname.includes('/lite');
+      if (onLitePage) {
         // Logo click on Lite -> go to Home
         const logoBtn = e.target.closest('button._rHu7W_logoWrap, [class*="_rHu7W_logoWrap"]');
         if (logoBtn) {
           e.preventDefault();
           e.stopPropagation();
-          const target = (window.innerWidth > 768) ? '/?variant=full' : '/';
+          const target = (window.innerWidth > 768) ? (base + '/?variant=full') : (base + '/');
           window.location.assign(target);
           return;
         }
@@ -946,7 +960,8 @@
         // Links inside the 3-dot menu or page navigation
         const navLink = e.target.closest('a._rHu7W_link, [class*="_rHu7W_menuPanel"] a, [class*="_rHu7W_link"], ._8VLL1W_legal, [class*="_8VLL1W_legal"]');
         if (navLink) {
-          const href = navLink.getAttribute('href');
+          const rawHref = navLink.getAttribute('href') || '';
+          const href = (base && rawHref.startsWith(base)) ? (rawHref.slice(base.length) || '/') : rawHref;
           const label = (navLink.innerText || navLink.textContent || '').trim().toUpperCase();
 
           // External links (LAB, socials, etc.) or mailto - let default proceed
@@ -957,7 +972,7 @@
           if (label === 'HOME' || href === '/') {
             e.preventDefault();
             e.stopPropagation();
-            const target = (window.innerWidth > 768) ? '/?variant=full' : '/';
+            const target = (window.innerWidth > 768) ? (base + '/?variant=full') : (base + '/');
             window.location.assign(target);
             return;
           }
@@ -966,7 +981,7 @@
             e.preventDefault();
             e.stopPropagation();
             if (window.innerWidth > 768) {
-              window.location.assign('/?variant=full&glide=projects');
+              window.location.assign(base + '/?variant=full&glide=projects');
             } else {
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }
@@ -977,7 +992,7 @@
             e.preventDefault();
             e.stopPropagation();
             if (window.innerWidth > 768) {
-              window.location.assign('/?variant=full&glide=about');
+              window.location.assign(base + '/?variant=full&glide=about');
             } else {
               showToast('Mahmud Hasan — Full Stack Developer & AI Automation Expert');
             }
@@ -988,7 +1003,7 @@
             e.preventDefault();
             e.stopPropagation();
             if (window.innerWidth > 768) {
-              window.location.assign('/?variant=full&glide=contact');
+              window.location.assign(base + '/?variant=full&glide=contact');
             } else {
               window.open('https://wa.me/8801767850859?text=Hi%20Mahmud,%20I%20saw%20your%20portfolio!', '_blank');
             }
@@ -1015,7 +1030,7 @@
           if (label === 'PROJECT SLIDE VIEW' || label === 'LITE VERSION' || href === '/lite') {
             e.preventDefault();
             e.stopPropagation();
-            window.location.assign('/lite');
+            window.location.assign(base + '/lite');
             return;
           }
 
