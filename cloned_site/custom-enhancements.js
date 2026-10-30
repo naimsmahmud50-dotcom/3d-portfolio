@@ -523,25 +523,43 @@
       const path = (base && rawPath.startsWith(base)) ? (rawPath.slice(base.length) || '/') : rawPath;
       const params = new URLSearchParams(window.location.search || '');
       const glide = params.get('glide') || '';
-      const target = (path === '/about' || glide === 'about') ? 'ABOUT' :
-                     (path === '/contact' || glide === 'contact') ? 'CONTACT' :
-                     (path === '/projects' || glide === 'projects') ? 'PROJECTS' : null;
 
-      if (target) {
-        const timer = setInterval(() => {
-          const enterBtn = document.querySelector('button[data-testid="loader-enter"]');
-          if (!enterBtn) {
-            clearInterval(timer);
-            setTimeout(() => {
-              const links = Array.from(document.querySelectorAll('a._rHu7W_link, [class*="_rHu7W_link"]'));
-              const link = links.find(l => (l.innerText || l.textContent || '').trim().toUpperCase() === target);
-              if (link) {
-                link.click();
-              }
-            }, 800);
-          }
-        }, 300);
-      }
+      const targetSection = (path === '/about' || glide === 'about') ? 'sceneAbout' :
+                            (path === '/contact' || glide === 'contact') ? 'sceneContactReveal' :
+                            (path === '/projects' || glide === 'projects') ? 'scene1' : null;
+
+      if (!targetSection) return;
+
+      let entered = false;
+      const tryEnter = () => {
+        const cta = document.querySelector('button.y9w63G_cta, [class*="y9w63G_cta"], button[data-testid="loader-enter"]');
+        if (cta && !cta.disabled) {
+          cta.click();
+          entered = true;
+          return true;
+        }
+        return false;
+      };
+
+      tryEnter();
+      let pollAttempts = 0;
+      const enterInterval = setInterval(() => {
+        pollAttempts++;
+        if (entered || tryEnter() || pollAttempts > 30) {
+          clearInterval(enterInterval);
+          let scrollAttempts = 0;
+          const scrollInterval = setInterval(() => {
+            scrollAttempts++;
+            const el = document.getElementById(targetSection);
+            if (el && el.offsetTop > 0) {
+              window.scrollTo({ top: el.offsetTop, behavior: 'smooth' });
+              clearInterval(scrollInterval);
+            } else if (scrollAttempts > 40) {
+              clearInterval(scrollInterval);
+            }
+          }, 100);
+        }
+      }, 100);
     } catch (err) {
       console.warn('Glide handler notice:', err);
     }
@@ -980,19 +998,20 @@
           if (label === 'PROJECTS' || href === '/projects') {
             e.preventDefault();
             e.stopPropagation();
-            if (window.innerWidth > 768) {
-              window.location.assign(base + '/?variant=full&glide=projects');
-            } else {
-              window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (window.__mhLiteController && window.__mhLiteController.eM) {
+              window.__mhLiteController.eM.setScrollValue(0);
             }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            closeMenu();
             return;
           }
 
           if (label === 'ABOUT' || href === '/about') {
             e.preventDefault();
             e.stopPropagation();
-            if (window.innerWidth > 768) {
-              window.location.assign(base + '/?variant=full&glide=about');
+            closeMenu();
+            if (typeof window.__mhOpenHud === 'function') {
+              window.__mhOpenHud();
             } else {
               showToast('Mahmud Hasan — Full Stack Developer & AI Automation Expert');
             }
@@ -1002,11 +1021,8 @@
           if (label === 'CONTACT' || href === '/contact') {
             e.preventDefault();
             e.stopPropagation();
-            if (window.innerWidth > 768) {
-              window.location.assign(base + '/?variant=full&glide=contact');
-            } else {
-              window.open('https://wa.me/8801767850859?text=Hi%20Mahmud,%20I%20saw%20your%20portfolio!', '_blank');
-            }
+            closeMenu();
+            window.open('https://wa.me/8801767850859?text=Hi%20Mahmud,%20I%20saw%20your%20portfolio!', '_blank');
             return;
           }
 
@@ -1054,10 +1070,79 @@
           }
         }
       } else {
-        // When in full 3D experience, handle HOME or logo click to exit interior
-        const homeTrigger = e.target.closest('button._rHu7W_logoWrap, [class*="_rHu7W_logoWrap"]') ||
-          (e.target.closest('a._rHu7W_link, [class*="_rHu7W_menuPanel"] a') &&
-           (((e.target.innerText || e.target.textContent || '').trim().toUpperCase() === 'HOME') || e.target.getAttribute('href') === '/'));
+        // When in full 3D experience, handle menu links and logo click
+        const navLink = e.target.closest('a._rHu7W_link, [class*="_rHu7W_menuPanel"] a');
+        if (navLink) {
+          const rawHref = navLink.getAttribute('href') || '';
+          const href = (base && rawHref.startsWith(base)) ? (rawHref.slice(base.length) || '/') : rawHref;
+          const label = (navLink.innerText || navLink.textContent || '').trim().toUpperCase();
+
+          const closeMenu = () => {
+            const menuToggle = document.querySelector('button._rHu7W_iconButton._rHu7W_menu, button[class*="_rHu7W_menu"], button._rHu7W_iconButton');
+            if (menuToggle && menuToggle.getAttribute('aria-expanded') === 'true') {
+              menuToggle.click();
+            }
+          };
+
+          if (label === 'HOME' || href === '/') {
+            e.preventDefault();
+            e.stopPropagation();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            try {
+              if (window.__mhProjectStore && typeof window.__mhProjectStore.getState === 'function') {
+                const s = window.__mhProjectStore.getState();
+                if (s.interiorStatus === 'interior' || s.interiorStatus === 'entering') {
+                  if (typeof s.exitInterior === 'function') s.exitInterior();
+                }
+              }
+            } catch (_) {}
+            closeMenu();
+            return;
+          }
+
+          if (label === 'PROJECTS' || href === '/projects') {
+            e.preventDefault();
+            e.stopPropagation();
+            const el = document.getElementById('scene1');
+            if (el) {
+              window.scrollTo({ top: el.offsetTop, behavior: 'smooth' });
+            }
+            closeMenu();
+            return;
+          }
+
+          if (label === 'ABOUT' || href === '/about') {
+            e.preventDefault();
+            e.stopPropagation();
+            const el = document.getElementById('sceneAbout');
+            if (el) {
+              window.scrollTo({ top: el.offsetTop, behavior: 'smooth' });
+            }
+            closeMenu();
+            return;
+          }
+
+          if (label === 'CONTACT' || href === '/contact') {
+            e.preventDefault();
+            e.stopPropagation();
+            const el = document.getElementById('sceneContactReveal');
+            if (el) {
+              window.scrollTo({ top: el.offsetTop, behavior: 'smooth' });
+            }
+            closeMenu();
+            return;
+          }
+
+          if (label === 'PROJECT SLIDE VIEW' || label === 'LITE VERSION' || href === '/lite') {
+            e.preventDefault();
+            e.stopPropagation();
+            window.location.assign(base + '/lite');
+            return;
+          }
+        }
+
+        // When in full 3D experience, handle logo click to exit interior
+        const homeTrigger = e.target.closest('button._rHu7W_logoWrap, [class*="_rHu7W_logoWrap"]');
         if (homeTrigger) {
           try {
             if (window.__mhProjectStore && typeof window.__mhProjectStore.getState === 'function') {
@@ -1069,6 +1154,7 @@
               }
             }
           } catch (err) {}
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         }
       }
     }, true);
@@ -1303,10 +1389,10 @@
       }
     }
 
-    // Intercept menu clicks on mobile if user clicks ABOUT
+    // Intercept menu clicks on mobile or on /lite if user clicks ABOUT
     document.addEventListener('click', (e) => {
       const aboutLink = e.target.closest('a[href*="about"], [class*="_rHu7W_link"]');
-      if (aboutLink && window.innerWidth <= 768) {
+      if (aboutLink && (window.innerWidth <= 768 || window.location.pathname.includes('/lite') || document.body.classList.contains('is-lite'))) {
         const text = (aboutLink.innerText || aboutLink.textContent || '').trim().toUpperCase();
         if (text === 'ABOUT' || text === 'SKILLS') {
           e.preventDefault();

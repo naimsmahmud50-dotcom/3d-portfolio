@@ -1780,3 +1780,38 @@ a[href*="whatsapp"]:hover {
     font-size: 10px !important;
   }
 }
+
+/* Desktop Cyber HUD Profile Modal for Lite / 3D */
+@media screen and (min-width: 769px) {
+  #mh-mobile-hud-modal {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 99999 !important;
+    background: rgba(5, 10, 18, 0.88) !important;
+    backdrop-filter: blur(24px) !important;
+    -webkit-backdrop-filter: blur(24px) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+  #mh-mobile-hud-modal.active {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+  #mh-mobile-hud-modal .mh-mobile-hud-sheet {
+    width: 90% !important;
+    max-width: 580px !important;
+    max-height: 84vh !important;
+    border: 1.5px solid rgba(0, 229, 255, 0.45) !important;
+    border-radius: 28px !important;
+    transform: translateY(20px) scale(0.96);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.9), 0 0 40px rgba(0, 229, 255, 0.25) !important;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+  #mh-mobile-hud-modal.active .mh-mobile-hud-sheet {
+    transform: translateY(0) scale(1) !important;
+  }
+}
