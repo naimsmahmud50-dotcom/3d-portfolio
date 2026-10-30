@@ -1135,6 +1135,190 @@
     setInterval(checkError, 400);
   }
 
+  // 12. Mobile 3D Skills & Profile HUD Engine (Runs on mobile devices)
+  function setupMobileSkillsHud() {
+    function injectHud() {
+      // 1. Inject top navbar pill button on mobile
+      const availWrap = document.querySelector('._rHu7W_availabilityWrap, [class*="_rHu7W_availabilityWrap"]');
+      if (availWrap && !document.getElementById('mh-mobile-skills-trigger')) {
+        const btn = document.createElement('button');
+        btn.id = 'mh-mobile-skills-trigger';
+        btn.type = 'button';
+        btn.className = 'mh-mobile-hud-pill';
+        btn.innerHTML = '<span>⚡ SKILLS &amp; BIO</span>';
+        btn.setAttribute('aria-label', 'Open Skills & Bio Drawer');
+        btn.addEventListener('click', openHud);
+        availWrap.parentNode.insertBefore(btn, availWrap.nextSibling);
+      }
+
+      // 2. Inject Modal Sheet
+      if (!document.getElementById('mh-mobile-hud-modal')) {
+        const modal = document.createElement('div');
+        modal.id = 'mh-mobile-hud-modal';
+        modal.innerHTML = `
+          <div class="mh-mobile-hud-sheet">
+            <div class="mh-hud-drag-handle"></div>
+            
+            <div class="mh-hud-profile-row">
+              <img src="/assets/mahmud.jpg" alt="Mahmud Hasan" class="mh-hud-avatar" onerror="this.src='/apple-icon.png'" />
+              <div>
+                <h3 class="mh-hud-title-name">MAHMUD HASAN</h3>
+                <p class="mh-hud-title-role">Lead AI Architect &amp; Systems Engineer</p>
+                <div style="font-size: 10px; color: #00ff88; margin-top: 4px; display: flex; align-items: center; gap: 5px;">
+                  <span style="width:6px; height:6px; border-radius:50%; background:#00ff88; display:inline-block; box-shadow:0 0 6px #00ff88;"></span>
+                  <span>DHAKA // 23.8103°N · AVAILABLE FOR CONTRACTS</span>
+                </div>
+              </div>
+              <button type="button" class="mh-hud-close-btn" id="mh-hud-close" aria-label="Close">✕</button>
+            </div>
+
+            <!-- Instant Contact Actions -->
+            <div class="mh-hud-section-label">⚡ DIRECT 1-TAP CONTACT</div>
+            <div class="mh-hud-actions-grid">
+              <a href="https://wa.me/8801767850859" target="_blank" rel="noopener noreferrer" class="mh-hud-btn mh-hud-btn-primary">
+                <span>💬 WhatsApp Direct</span>
+              </a>
+              <a href="https://www.linkedin.com/in/mahmud-hasan-687908269" target="_blank" rel="noopener noreferrer" class="mh-hud-btn mh-hud-btn-secondary">
+                <span>🔗 LinkedIn Profile</span>
+              </a>
+              <a href="https://github.com/naimsmahmud50-dotcom" target="_blank" rel="noopener noreferrer" class="mh-hud-btn mh-hud-btn-secondary">
+                <span>💻 GitHub Repos</span>
+              </a>
+              <a href="mailto:mahmudhasan.infodev@gmail.com" class="mh-hud-btn mh-hud-btn-secondary oQ_U9W_email">
+                <span>✉️ Copy Email</span>
+              </a>
+            </div>
+
+            <!-- Engineering Skills Matrix -->
+            <div class="mh-hud-section-label">🧠 CORE ENGINEERING SKILLS MATRIX</div>
+            <div class="mh-hud-skills-grid">
+              <div class="mh-hud-skill-card">
+                <div class="mh-hud-skill-head">🤖 Autonomous AI Agents &amp; Automation</div>
+                <div class="mh-hud-skill-desc">Multi-Agent Swarm Orchestration, LangChain, Tool Calling, RAG Pipelines, Playwright Stealth Browser Automation, Prompt Engineering.</div>
+              </div>
+              <div class="mh-hud-skill-card">
+                <div class="mh-hud-skill-head">💻 Full-Stack &amp; Cloud Platforms</div>
+                <div class="mh-hud-skill-desc">Next.js 15 (App Router), TypeScript, Node.js, PostgreSQL, Medusa v1.20 Headless, Redis, Tailwind CSS, Docker, Linux Systems.</div>
+              </div>
+              <div class="mh-hud-skill-card">
+                <div class="mh-hud-skill-head">📱 Mobile &amp; Cross-Platform Systems</div>
+                <div class="mh-hud-skill-desc">Flutter (Android/iOS Architecture), Offline-First Sync, WhatsApp Cloud API Messaging Dispatchers, Push Notification Pipelines.</div>
+              </div>
+              <div class="mh-hud-skill-card">
+                <div class="mh-hud-skill-head">🎨 3D Graphics &amp; Cyber Defense</div>
+                <div class="mh-hud-skill-desc">WebGPU, Three.js Custom Shaders, Remotion Motion Graphics, Certified Web Security Engineer (Arena Web Security).</div>
+              </div>
+            </div>
+
+            <!-- Flagship Production Deliverables -->
+            <div class="mh-hud-section-label">🚀 PRODUCTION DELIVERABLES (1-TAP ACCESS)</div>
+            <div class="mh-hud-projects-list">
+              <div class="mh-hud-project-item">
+                <div class="mh-hud-project-info">
+                  <h4>Madrasah Ecosystem</h4>
+                  <p>Enterprise ERP with Flutter App &amp; WhatsApp</p>
+                </div>
+                <div class="mh-hud-project-links">
+                  <a href="https://github.com/naimsmahmud50-dotcom/Madrasha-Managemant-Softaware" target="_blank" rel="noopener noreferrer" class="mh-hud-link-pill git">GitHub</a>
+                </div>
+              </div>
+              <div class="mh-hud-project-item">
+                <div class="mh-hud-project-info">
+                  <h4>MAIJRUN Tech Store</h4>
+                  <p>PC Builder, Medusa &amp; Local Gateways</p>
+                </div>
+                <div class="mh-hud-project-links">
+                  <a href="https://github.com/naimsmahmud50-dotcom/Maijrun-Teach" target="_blank" rel="noopener noreferrer" class="mh-hud-link-pill git">GitHub</a>
+                </div>
+              </div>
+              <div class="mh-hud-project-item">
+                <div class="mh-hud-project-info">
+                  <h4>Travel with Maijrun</h4>
+                  <p>Halal Luxury Portal (Live on Vercel)</p>
+                </div>
+                <div class="mh-hud-project-links">
+                  <a href="https://travel-w-ith-maijrun-alpha.vercel.app" target="_blank" rel="noopener noreferrer" class="mh-hud-link-pill demo">Live Demo</a>
+                  <a href="https://github.com/naimsmahmud50-dotcom/Travel-WIth-Maijrun" target="_blank" rel="noopener noreferrer" class="mh-hud-link-pill git">Git</a>
+                </div>
+              </div>
+              <div class="mh-hud-project-item">
+                <div class="mh-hud-project-info">
+                  <h4>Student Life Circle</h4>
+                  <p>Campus Networking (Live on GitHub Pages)</p>
+                </div>
+                <div class="mh-hud-project-links">
+                  <a href="https://naimsmahmud50-dotcom.github.io/Student-Life-Circle/" target="_blank" rel="noopener noreferrer" class="mh-hud-link-pill demo">Live Demo</a>
+                  <a href="https://github.com/naimsmahmud50-dotcom/Student-Life-Circle" target="_blank" rel="noopener noreferrer" class="mh-hud-link-pill git">Git</a>
+                </div>
+              </div>
+              <div class="mh-hud-project-item">
+                <div class="mh-hud-project-info">
+                  <h4>Arabic Language &amp; Culture</h4>
+                  <p>EdTech Portal (Live on Vercel)</p>
+                </div>
+                <div class="mh-hud-project-links">
+                  <a href="https://arabic-langualge-and-cultural-club.vercel.app" target="_blank" rel="noopener noreferrer" class="mh-hud-link-pill demo">Live Demo</a>
+                  <a href="https://github.com/naimsmahmud50-dotcom/Arabic-Langualge-and-Cultural-Club" target="_blank" rel="noopener noreferrer" class="mh-hud-link-pill git">Git</a>
+                </div>
+              </div>
+              <div class="mh-hud-project-item">
+                <div class="mh-hud-project-info">
+                  <h4>LinkedIn AI Automation Engine</h4>
+                  <p>Autonomous Lead Pipeline with Telegram Bot</p>
+                </div>
+                <div class="mh-hud-project-links">
+                  <a href="https://github.com/naimsmahmud50-dotcom/Linkdin-Automation-" target="_blank" rel="noopener noreferrer" class="mh-hud-link-pill git">GitHub</a>
+                </div>
+              </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.08); font-size: 11px; color: #64748b; font-family: 'JetBrains Mono', monospace;">
+              MAHMUD HASAN · CERTIFIED BY ARENA WEB SECURITY · 2026
+            </div>
+          </div>
+        `;
+        document.body.appendChild(modal);
+
+        document.getElementById('mh-hud-close').addEventListener('click', closeHud);
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) closeHud();
+        });
+      }
+    }
+
+    function openHud() {
+      const modal = document.getElementById('mh-mobile-hud-modal');
+      if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeHud() {
+      const modal = document.getElementById('mh-mobile-hud-modal');
+      if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
+    // Intercept menu clicks on mobile if user clicks ABOUT
+    document.addEventListener('click', (e) => {
+      const aboutLink = e.target.closest('a[href*="about"], [class*="_rHu7W_link"]');
+      if (aboutLink && window.innerWidth <= 768) {
+        const text = (aboutLink.innerText || aboutLink.textContent || '').trim().toUpperCase();
+        if (text === 'ABOUT' || text === 'SKILLS') {
+          e.preventDefault();
+          e.stopPropagation();
+          openHud();
+        }
+      }
+    }, true);
+
+    setTimeout(injectHud, 400);
+    setInterval(injectHud, 2000);
+  }
+
   function init() {
     setupErrorRecoveryGuardian();
     setupLiteNavigation();
@@ -1144,10 +1328,9 @@
     setupAboutSection();
     setupFooterAndSocialsClean();
     setupEmailCopy();
-    // initDhakaClock(); removed
     setupTerminal();
+    setupMobileSkillsHud();
     setupProjectHudActions();
-    // setupContactHub(); removed
     setupContact3DInteractivity();
     setupRouteAutoGlide();
     console.log('⚡ Mahmud Hasan Cyber Enhancement Engine Active');

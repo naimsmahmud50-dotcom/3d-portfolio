@@ -1223,22 +1223,345 @@ a[href*="whatsapp"]:hover {
   /* Reach out & socials spacing */
   .oQ_U9W_socials,
   ._7ZPv2G_socials {
-    gap: 14px !important;
+    gap: 16px !important;
   }
   .oQ_U9W_socialLink,
   ._7ZPv2G_socialLink {
-    width: 36px !important;
-    height: 36px !important;
+    width: 38px !important;
+    height: 38px !important;
   }
-  /* Cyber terminal mobile optimization */
+
+  /* Footer & Contact on mobile - perfectly docked at the bottom with zero collision */
+  ._7ZPv2G_root {
+    position: fixed !important;
+    inset: auto 0 0 0 !important;
+    bottom: 0 !important;
+    top: auto !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    padding: 0 18px calc(12px + env(safe-area-inset-bottom, 0px)) 18px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    z-index: 50 !important;
+    pointer-events: none !important;
+  }
+  ._7ZPv2G_root * {
+    pointer-events: auto !important;
+  }
+  ._7ZPv2G_root ._7ZPv2G_copyright {
+    display: none !important;
+  }
+  ._7ZPv2G_contact {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  ._7ZPv2G_email {
+    font-size: 10px !important;
+    letter-spacing: 0.05em !important;
+    color: rgba(0, 229, 255, 0.85) !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    display: inline-flex !important;
+    align-items: center !important;
+  }
+  ._7ZPv2G_socials {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 14px !important;
+    align-items: center !important;
+    margin: 0 !important;
+  }
+  ._7ZPv2G_socialLink {
+    width: 28px !important;
+    height: 28px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  ._7ZPv2G_socialIcon {
+    height: 14px !important;
+    width: auto !important;
+    opacity: 0.85 !important;
+  }
+
+  /* Cyber terminal mobile optimization: cleanly elevated above bottom footer bar */
   #mh-terminal-toggle {
-    bottom: 12px !important;
+    bottom: 54px !important;
     height: 34px !important;
-    padding: 0 14px !important;
+    padding: 0 16px !important;
     font-size: 11px !important;
+    z-index: 90 !important;
   }
   .mh-terminal-window {
-    width: 96% !important;
-    bottom: 54px !important;
+    width: 94% !important;
+    max-width: 440px !important;
+    bottom: 96px !important;
+    max-height: 62vh !important;
+  }
+}
+
+/* ==========================================================================
+   15. MOBILE 3D SKILLS & PROFILE CYBER-HUD MODAL
+   ========================================================================== */
+.mh-mobile-hud-pill {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .mh-mobile-hud-pill {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 5px 12px !important;
+    background: rgba(0, 229, 255, 0.12) !important;
+    border: 1px solid rgba(0, 229, 255, 0.4) !important;
+    border-radius: 9999px !important;
+    color: #00e5ff !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 10.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.06em !important;
+    cursor: pointer !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    transition: all 0.25s ease !important;
+    box-shadow: 0 0 12px rgba(0, 229, 255, 0.2) !important;
+  }
+
+  .mh-mobile-hud-pill:active {
+    transform: scale(0.96) !important;
+    background: rgba(0, 229, 255, 0.25) !important;
+  }
+
+  #mh-mobile-hud-modal {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 99999 !important;
+    background: rgba(5, 10, 18, 0.88) !important;
+    backdrop-filter: blur(24px) !important;
+    -webkit-backdrop-filter: blur(24px) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-end !important;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+
+  #mh-mobile-hud-modal.active {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  .mh-mobile-hud-sheet {
+    background: linear-gradient(180deg, rgba(13, 22, 38, 0.98) 0%, rgba(6, 12, 22, 0.99) 100%) !important;
+    border-top: 1.5px solid rgba(0, 229, 255, 0.45) !important;
+    border-radius: 28px 28px 0 0 !important;
+    padding: 24px 20px 32px 20px !important;
+    max-height: 86vh !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.8), 0 0 35px rgba(0, 229, 255, 0.2) !important;
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+
+  #mh-mobile-hud-modal.active .mh-mobile-hud-sheet {
+    transform: translateY(0) !important;
+  }
+
+  .mh-hud-drag-handle {
+    width: 44px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 2px;
+    margin: 0 auto 18px auto;
+  }
+
+  .mh-hud-profile-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .mh-hud-avatar {
+    width: 62px;
+    height: 62px;
+    border-radius: 18px;
+    border: 1.5px solid #00e5ff;
+    object-fit: cover;
+    box-shadow: 0 0 16px rgba(0, 229, 255, 0.35);
+  }
+
+  .mh-hud-title-name {
+    font-size: 20px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+    margin: 0 0 4px 0;
+  }
+
+  .mh-hud-title-role {
+    font-size: 11px;
+    font-weight: 700;
+    color: #00e5ff;
+    letter-spacing: 0.08em;
+    font-family: 'JetBrains Mono', monospace;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  .mh-hud-close-btn {
+    margin-left: auto;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  .mh-hud-section-label {
+    font-size: 11px;
+    font-weight: 800;
+    color: #94a3b8;
+    letter-spacing: 0.1em;
+    font-family: 'JetBrains Mono', monospace;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .mh-hud-actions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+
+  .mh-hud-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 14px;
+    border-radius: 14px;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .mh-hud-btn-primary {
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 16px rgba(37, 211, 102, 0.35);
+  }
+
+  .mh-hud-btn-secondary {
+    background: rgba(0, 229, 255, 0.12);
+    border: 1px solid rgba(0, 229, 255, 0.35);
+    color: #00e5ff;
+  }
+
+  .mh-hud-skills-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+
+  .mh-hud-skill-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    padding: 12px 14px;
+  }
+
+  .mh-hud-skill-head {
+    font-size: 12px;
+    font-weight: 700;
+    color: #00e5ff;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .mh-hud-skill-desc {
+    font-size: 11px;
+    color: #cbd5e1;
+    line-height: 1.4;
+  }
+
+  .mh-hud-projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .mh-hud-project-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(0, 229, 255, 0.2);
+    border-radius: 14px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .mh-hud-project-info h4 {
+    margin: 0 0 3px 0;
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  .mh-hud-project-info p {
+    margin: 0;
+    font-size: 10.5px;
+    color: #94a3b8;
+  }
+
+  .mh-hud-project-links {
+    display: flex;
+    gap: 8px;
+  }
+
+  .mh-hud-link-pill {
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 10px;
+    font-weight: 700;
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .mh-hud-link-pill.demo {
+    background: #00e5ff;
+    color: #030b14;
+  }
+
+  .mh-hud-link-pill.git {
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
   }
 }
