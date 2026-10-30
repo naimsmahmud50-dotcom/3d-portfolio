@@ -1287,6 +1287,7 @@
     }
 
     function openHud() {
+      window.__mhOpenHud = openHud;
       const modal = document.getElementById('mh-mobile-hud-modal');
       if (modal) {
         modal.classList.add('active');
@@ -1319,6 +1320,236 @@
     setInterval(injectHud, 2000);
   }
 
+  
+  // 13. Mobile Project Slide View Cyber-HUD & Navigation Engine (Runs on mobile / lite)
+  function setupMobileProjectSlideView() {
+    const isMobile = window.innerWidth <= 768;
+    const isLite = window.location.pathname.includes('/lite') || document.body.classList.contains('is-lite');
+    if (!isMobile && !isLite) return;
+
+    const LITE_PROJECTS_DATA = [
+      {
+        idxStr: '01 / 08',
+        year: '2026',
+        category: 'ENTERPRISE ERP & MOBILE',
+        title: 'Madrasah Ecosystem',
+        desc: 'Multi-tenant ERP with real-time Hifz milestones, exams, biometric attendance & parent WhatsApp Cloud alerts.',
+        tags: ['Next.js', 'Flutter', 'PostgreSQL', 'WhatsApp API'],
+        url: 'https://github.com/naimsmahmud50-dotcom/Madrasha-Managemant-Softaware',
+        label: '⚡ GITHUB REPO',
+        isLive: false
+      },
+      {
+        idxStr: '02 / 08',
+        year: '2025',
+        category: 'ENDPOINT CYBER DEFENSE',
+        title: 'Secure My PC',
+        desc: 'Advanced Windows endpoint protection with real-time behavioral heuristics & kernel process interception.',
+        tags: ['C++', 'Python', 'Win32 API', 'Cyber Security'],
+        url: 'https://github.com/naimsmahmud50-dotcom',
+        label: '🛡️ PRIVATE REPO',
+        isLive: false
+      },
+      {
+        idxStr: '03 / 08',
+        year: '2026',
+        category: 'HEADLESS E-COMMERCE',
+        title: 'MAIJRUN Tech Store',
+        desc: 'Production hardware marketplace with live PC Builder compatibility engine, BDT gateways & courier webhooks.',
+        tags: ['Next.js 15', 'TypeScript', 'Medusa', 'Tailwind CSS'],
+        url: 'https://github.com/naimsmahmud50-dotcom/Maijrun-Teach',
+        label: '⚡ GITHUB REPO',
+        isLive: false
+      },
+      {
+        idxStr: '04 / 08',
+        year: '2025',
+        category: 'LUXURY TRAVEL PORTAL',
+        title: 'Travel with Maijrun',
+        desc: 'Live high-performance travel portal with dynamic itineraries, booking inquiry dispatchers & 60fps animations.',
+        tags: ['Next.js', 'TypeScript', 'Tailwind', 'Node.js'],
+        url: 'https://travel-w-ith-maijrun-alpha.vercel.app',
+        label: '🚀 LIVE DEMO',
+        isLive: true
+      },
+      {
+        idxStr: '05 / 08',
+        year: '2024',
+        category: 'EDTECH COMMUNITY',
+        title: 'Arabic Language & Cultural Club',
+        desc: 'Interactive learning hub featuring bidirectional RTL layout engine, synchronized recitation audio & study forums.',
+        tags: ['React', 'Next.js', 'RTL Engine', 'Audio Sync'],
+        url: 'https://arabic-langualge-and-cultural-club.vercel.app',
+        label: '🚀 LIVE DEMO',
+        isLive: true
+      },
+      {
+        idxStr: '06 / 08',
+        year: '2025',
+        category: 'CAMPUS NETWORKING',
+        title: 'Student Life Circle',
+        desc: 'Comprehensive national exam-prep portal and student community with timed quizzes & past-paper archive.',
+        tags: ['Next.js', 'Express', 'MongoDB', 'Redis'],
+        url: 'https://naimsmahmud50-dotcom.github.io/Student-Life-Circle/',
+        label: '🚀 LIVE DEMO',
+        isLive: true
+      },
+      {
+        idxStr: '07 / 08',
+        year: '2026',
+        category: 'META GRAPH AUTOMATION',
+        title: 'Facebook Automation',
+        desc: 'High-throughput page management bot with automated cross-posting, intelligent auto-replies & lead pipelines.',
+        tags: ['Node.js', 'Meta Graph API', 'Puppeteer', 'Redis'],
+        url: 'https://github.com/naimsmahmud50-dotcom/Facebook-Automation-',
+        label: '⚡ GITHUB REPO',
+        isLive: false
+      },
+      {
+        idxStr: '08 / 08',
+        year: '2026',
+        category: 'AI LEAD ENGINE',
+        title: 'LinkedIn Automation',
+        desc: 'Autonomous lead generation engine with Telegram bot remote control, Gemini AI synthesis & anti-ban stealth.',
+        tags: ['Python 3.12', 'Playwright', 'Gemini AI', 'Telegram Bot'],
+        url: 'https://github.com/naimsmahmud50-dotcom/Linkdin-Automation-',
+        label: '⚡ GITHUB REPO',
+        isLive: false
+      }
+    ];
+
+    let currentSyncedIdx = -1;
+
+    function injectSlideViewElements() {
+      if (!document.body) return;
+
+      // 1. Top hint pill
+      if (!document.getElementById('mh-mobile-hint-pill')) {
+        const hint = document.createElement('div');
+        hint.id = 'mh-mobile-hint-pill';
+        hint.innerHTML = '<span>‹ SWIPE 3D CARDS OR TAP ARROWS ›</span>';
+        document.body.appendChild(hint);
+      }
+
+      // 2. Navigation Chevrons
+      if (!document.getElementById('mh-lite-prev')) {
+        const prevBtn = document.createElement('button');
+        prevBtn.id = 'mh-lite-prev';
+        prevBtn.type = 'button';
+        prevBtn.className = 'mh-lite-nav-btn prev';
+        prevBtn.setAttribute('aria-label', 'Previous Project');
+        prevBtn.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>';
+        prevBtn.addEventListener('click', () => {
+          if (window.__mhLiteController && window.__mhLiteController.eM) {
+            window.__mhLiteController.eM.pageBy(-1);
+          }
+        });
+        document.body.appendChild(prevBtn);
+      }
+
+      if (!document.getElementById('mh-lite-next')) {
+        const nextBtn = document.createElement('button');
+        nextBtn.id = 'mh-lite-next';
+        nextBtn.type = 'button';
+        nextBtn.className = 'mh-lite-nav-btn next';
+        nextBtn.setAttribute('aria-label', 'Next Project');
+        nextBtn.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>';
+        nextBtn.addEventListener('click', () => {
+          if (window.__mhLiteController && window.__mhLiteController.eM) {
+            window.__mhLiteController.eM.pageBy(1);
+          }
+        });
+        document.body.appendChild(nextBtn);
+      }
+
+      // 3. Bottom Project HUD Card
+      if (!document.getElementById('mh-mobile-project-hud')) {
+        const hud = document.createElement('div');
+        hud.id = 'mh-mobile-project-hud';
+        hud.innerHTML = `
+          <div class="mh-hud-meta-row">
+            <span class="mh-hud-badge-idx" id="mh-hud-idx">PROJECT 01 / 08</span>
+            <span class="mh-hud-badge-cat" id="mh-hud-cat">ENTERPRISE ERP &amp; MOBILE</span>
+          </div>
+          <h3 class="mh-hud-card-title" id="mh-hud-title">Madrasah Ecosystem</h3>
+          <p class="mh-hud-card-desc" id="mh-hud-desc">Multi-tenant ERP with real-time Hifz milestones, exams, biometric attendance &amp; parent WhatsApp Cloud alerts.</p>
+          <div class="mh-hud-tags-row" id="mh-hud-tags">
+            <span class="mh-hud-tag">Next.js</span>
+            <span class="mh-hud-tag">Flutter</span>
+            <span class="mh-hud-tag">PostgreSQL</span>
+            <span class="mh-hud-tag">WhatsApp API</span>
+          </div>
+          <div class="mh-hud-actions-row">
+            <a id="mh-hud-act-primary" href="https://github.com/naimsmahmud50-dotcom/Madrasha-Managemant-Softaware" target="_blank" rel="noopener noreferrer" class="mh-hud-act-btn primary">
+              <span id="mh-hud-act-text">⚡ GITHUB REPO</span>
+            </a>
+            <button id="mh-hud-act-all" type="button" class="mh-hud-act-btn secondary">
+              <span>📋 ALL 8 PROJECTS</span>
+            </button>
+          </div>
+        `;
+        document.body.appendChild(hud);
+
+        const allBtn = document.getElementById('mh-hud-act-all');
+        if (allBtn) {
+          allBtn.addEventListener('click', () => {
+            if (typeof window.__mhOpenHud === 'function') {
+              window.__mhOpenHud();
+            } else {
+              const trigger = document.getElementById('mh-mobile-skills-trigger');
+              if (trigger) trigger.click();
+            }
+          });
+        }
+      }
+    }
+
+    function updateHudCard(idx) {
+      const p = LITE_PROJECTS_DATA[idx];
+      if (!p) return;
+
+      const idxEl = document.getElementById('mh-hud-idx');
+      const catEl = document.getElementById('mh-hud-cat');
+      const titleEl = document.getElementById('mh-hud-title');
+      const descEl = document.getElementById('mh-hud-desc');
+      const tagsEl = document.getElementById('mh-hud-tags');
+      const actBtn = document.getElementById('mh-hud-act-primary');
+      const actText = document.getElementById('mh-hud-act-text');
+
+      if (idxEl) idxEl.textContent = `PROJECT ${p.idxStr}`;
+      if (catEl) catEl.textContent = p.category;
+      if (titleEl) titleEl.textContent = p.title;
+      if (descEl) descEl.textContent = p.desc;
+      if (tagsEl) {
+        tagsEl.innerHTML = p.tags.map(t => `<span class="mh-hud-tag">${t}</span>`).join('');
+      }
+      if (actBtn && actText) {
+        actBtn.href = p.url;
+        actText.textContent = p.label;
+      }
+    }
+
+    function syncCarouselHUD() {
+      injectSlideViewElements();
+
+      let targetIdx = 0;
+      if (window.__mhLiteController && window.__mhLiteController.eM) {
+        const scrollVal = window.__mhLiteController.eM.scrollValue;
+        const pitch = window.__mhLiteController.ei?.pitch || 1.195;
+        const raw = Math.round(scrollVal / pitch);
+        targetIdx = ((raw % 8) + 8) % 8;
+      }
+
+      if (targetIdx !== currentSyncedIdx) {
+        currentSyncedIdx = targetIdx;
+        updateHudCard(targetIdx);
+      }
+    }
+
+    setInterval(syncCarouselHUD, 120);
+    syncCarouselHUD();
+  }
+
   function init() {
     setupErrorRecoveryGuardian();
     setupLiteNavigation();
@@ -1330,6 +1561,7 @@
     setupEmailCopy();
     setupTerminal();
     setupMobileSkillsHud();
+    setupMobileProjectSlideView();
     setupProjectHudActions();
     setupContact3DInteractivity();
     setupRouteAutoGlide();
