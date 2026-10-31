@@ -234,11 +234,75 @@
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       closeVideoPlayer();
+      closeMyVideosModal();
     }
   });
 
   window.__mhOpenVideoPlayer = openVideoPlayer;
   window.__mhCloseVideoPlayer = closeVideoPlayer;
+
+  // Dedicated My Videos Showcase Modal Controller
+  function openMyVideosModal() {
+    let modal = document.getElementById('mh-my-videos-modal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'mh-my-videos-modal';
+      modal.className = 'mh-videos-modal-backdrop';
+      modal.innerHTML = `
+        <div class="mh-videos-modal-dialog">
+          <div class="mh-videos-modal-header">
+            <div class="mh-videos-modal-titles">
+              <span class="mh-videos-kicker">CINEMATIC AI PRODUCTIONS</span>
+              <h3 class="mh-videos-headline">🎬 My Videos</h3>
+              <p class="mh-videos-subline">AI Video Direction, Prompt Cinematography &amp; Kinetic Motion VFX</p>
+            </div>
+            <button type="button" class="mh-videos-modal-close" id="mh-videos-modal-close" aria-label="Close My Videos">✕</button>
+          </div>
+          <div class="mh-videos-cards-grid">
+            ${AI_VIDEOS_CONFIG.map(v => `
+              <div class="mh-vid-card" data-video-id="${v.id}">
+                <div class="mh-vid-card-top">
+                  <span class="mh-vid-badge" style="border-color: ${v.accentColor}; color: ${v.accentColor};">${v.badge}</span>
+                  <span class="mh-vid-cat">${v.category}</span>
+                </div>
+                <h4 class="mh-vid-title">${v.title}</h4>
+                <p class="mh-vid-desc">${v.desc}</p>
+                <div class="mh-vid-tools">
+                  ${v.tools.map(t => `<span class="mh-vid-tool-tag">${t}</span>`).join('')}
+                </div>
+                <button type="button" class="mh-vid-play-btn" onclick="window.__mhOpenVideoPlayer('${v.id}')">
+                  <span>▶ WATCH VIDEO</span>
+                </button>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+
+      modal.querySelector('#mh-videos-modal-close').addEventListener('click', closeMyVideosModal);
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeMyVideosModal();
+      });
+    }
+
+    modal.classList.add('active');
+    document.body.classList.add('mh-modal-open');
+  }
+
+  function closeMyVideosModal() {
+    const modal = document.getElementById('mh-my-videos-modal');
+    if (modal) {
+      modal.classList.remove('active');
+    }
+    const playerModal = document.getElementById('mh-video-player-modal');
+    if (!playerModal || !playerModal.classList.contains('active')) {
+      document.body.classList.remove('mh-modal-open');
+    }
+  }
+
+  window.__mhOpenMyVideos = openMyVideosModal;
+  window.__mhCloseMyVideos = closeMyVideosModal;
 
   // 1. Toast Notification Helper
   function showToast(message) {
@@ -1159,9 +1223,17 @@
             return;
           }
 
+          const closeMenu = () => {
+            const menuToggle = document.querySelector('button._rHu7W_menu, button[class*="_rHu7W_menu"]');
+            if (menuToggle && menuToggle.getAttribute('aria-expanded') === 'true') {
+              menuToggle.click();
+            }
+          };
+
           if (label === 'HOME' || href === '/') {
             e.preventDefault();
             e.stopPropagation();
+            closeMenu();
             const target = (window.innerWidth > 768) ? (base + '/?variant=full') : (base + '/');
             window.location.assign(target);
             return;
@@ -1198,6 +1270,16 @@
             return;
           }
 
+          if (label === 'MY VIDEOS' || label === 'AI VIDEOS' || label === 'VIDEOS') {
+            e.preventDefault();
+            e.stopPropagation();
+            closeMenu();
+            if (typeof window.__mhOpenMyVideos === 'function') {
+              window.__mhOpenMyVideos();
+            }
+            return;
+          }
+
           // Intercept any project detail route clicks on Lite to open direct demo/github
           if (href && href.startsWith('/projects/')) {
             e.preventDefault();
@@ -1218,7 +1300,11 @@
           if (label === 'PROJECT SLIDE VIEW' || label === 'LITE VERSION' || href === '/lite') {
             e.preventDefault();
             e.stopPropagation();
-            window.location.assign(base + '/lite');
+            closeMenu();
+            if (window.__mhLiteController && window.__mhLiteController.eM) {
+              window.__mhLiteController.eM.setScrollValue(0);
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
             return;
           }
 
@@ -1226,7 +1312,6 @@
             e.preventDefault();
             e.stopPropagation();
             try {
-              // Sanitize and validate navigation target to prevent XSS / javascript: execution
               const parsed = new URL(href, window.location.origin);
               if (parsed.protocol === 'http:' || parsed.protocol === 'https:') {
                 if (parsed.origin === window.location.origin) {
@@ -1235,85 +1320,14 @@
                   window.open(parsed.href, '_blank', 'noopener,noreferrer');
                 }
               }
-            } catch (_) {
-              // Ignore invalid or dangerous URI schemes (e.g. javascript:)
-            }
+            } catch (_) {}
             return;
           }
         }
       } else {
-        // When in full 3D experience, handle menu links and logo click
-        const navLink = e.target.closest('a._rHu7W_link, [class*="_rHu7W_menuPanel"] a');
-        if (navLink) {
-          const rawHref = navLink.getAttribute('href') || '';
-          const href = (base && rawHref.startsWith(base)) ? (rawHref.slice(base.length) || '/') : rawHref;
-          const label = (navLink.innerText || navLink.textContent || '').trim().toUpperCase();
-
-          const closeMenu = () => {
-            const menuToggle = document.querySelector('button._rHu7W_iconButton._rHu7W_menu, button[class*="_rHu7W_menu"], button._rHu7W_iconButton');
-            if (menuToggle && menuToggle.getAttribute('aria-expanded') === 'true') {
-              menuToggle.click();
-            }
-          };
-
-          if (label === 'HOME' || href === '/') {
-            e.preventDefault();
-            e.stopPropagation();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            try {
-              if (window.__mhProjectStore && typeof window.__mhProjectStore.getState === 'function') {
-                const s = window.__mhProjectStore.getState();
-                if (s.interiorStatus === 'interior' || s.interiorStatus === 'entering') {
-                  if (typeof s.exitInterior === 'function') s.exitInterior();
-                }
-              }
-            } catch (_) {}
-            closeMenu();
-            return;
-          }
-
-          if (label === 'PROJECTS' || href === '/projects') {
-            e.preventDefault();
-            e.stopPropagation();
-            const el = document.getElementById('scene1');
-            if (el) {
-              window.scrollTo({ top: el.offsetTop, behavior: 'smooth' });
-            }
-            closeMenu();
-            return;
-          }
-
-          if (label === 'ABOUT' || href === '/about') {
-            e.preventDefault();
-            e.stopPropagation();
-            const el = document.getElementById('sceneAbout');
-            if (el) {
-              window.scrollTo({ top: el.offsetTop, behavior: 'smooth' });
-            }
-            closeMenu();
-            return;
-          }
-
-          if (label === 'CONTACT' || href === '/contact') {
-            e.preventDefault();
-            e.stopPropagation();
-            const el = document.getElementById('sceneContactReveal');
-            if (el) {
-              window.scrollTo({ top: el.offsetTop, behavior: 'smooth' });
-            }
-            closeMenu();
-            return;
-          }
-
-          if (label === 'PROJECT SLIDE VIEW' || label === 'LITE VERSION' || href === '/lite') {
-            e.preventDefault();
-            e.stopPropagation();
-            window.location.assign(base + '/lite');
-            return;
-          }
-        }
-
-        // When in full 3D experience, handle logo click to exit interior
+        // When in full 3D experience, do NOT intercept menu links.
+        // Let Next.js native router handle 3D camera transitions for HOME, PROJECTS, ABOUT, CONTACT, etc.
+        // Only handle logo/home click when inside project interior to cleanly exit interior.
         const homeTrigger = e.target.closest('button._rHu7W_logoWrap, [class*="_rHu7W_logoWrap"]');
         if (homeTrigger) {
           try {
@@ -1326,7 +1340,6 @@
               }
             }
           } catch (err) {}
-          window.scrollTo({ top: 0, behavior: 'smooth' });
         }
       }
     }, true);
@@ -1414,9 +1427,15 @@
           vBtn.id = 'mh-video-nav-trigger';
           vBtn.type = 'button';
           vBtn.className = 'mh-mobile-hud-pill mh-pill-video';
-          vBtn.innerHTML = '<span>🎬 AI VIDEOS</span>';
-          vBtn.setAttribute('aria-label', 'Open AI Video Showcase');
-          vBtn.addEventListener('click', () => openHud('videos'));
+          vBtn.innerHTML = '<span class="mh-pill-icon">🎬</span> <span>My Videos</span>';
+          vBtn.setAttribute('aria-label', 'Open My Videos Showcase');
+          vBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (typeof window.__mhOpenMyVideos === 'function') {
+              window.__mhOpenMyVideos();
+            }
+          });
           availWrap.parentNode.insertBefore(vBtn, availWrap.nextSibling);
         }
       }
@@ -1616,19 +1635,6 @@
     window.__mhOpenHud = openHud;
     window.__mhCloseHud = closeHud;
 
-    // Intercept menu clicks on mobile or on /lite if user clicks ABOUT
-    document.addEventListener('click', (e) => {
-      const aboutLink = e.target.closest('a[href*="about"], [class*="_rHu7W_link"]');
-      if (aboutLink && (window.innerWidth <= 768 || window.location.pathname.includes('/lite') || document.body.classList.contains('is-lite'))) {
-        const text = (aboutLink.innerText || aboutLink.textContent || '').trim().toUpperCase();
-        if (text === 'ABOUT' || text === 'SKILLS') {
-          e.preventDefault();
-          e.stopPropagation();
-          openHud();
-        }
-      }
-    }, true);
-
     injectHud();
     setTimeout(injectHud, 400);
     setInterval(injectHud, 2000);
@@ -1798,7 +1804,7 @@
               <span id="mh-hud-act-text">⚡ GITHUB REPO</span>
             </a>
             <button id="mh-hud-act-video" type="button" class="mh-hud-act-btn video">
-              <span>🎬 AI VIDEOS</span>
+              <span>🎬 My Videos</span>
             </button>
             <button id="mh-hud-act-all" type="button" class="mh-hud-act-btn secondary">
               <span>📋 ALL 8</span>
@@ -1809,9 +1815,11 @@
 
         const vidBtn = document.getElementById('mh-hud-act-video');
         if (vidBtn) {
-          vidBtn.addEventListener('click', () => {
-            if (typeof window.__mhOpenHud === 'function') {
-              window.__mhOpenHud('videos');
+          vidBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (typeof window.__mhOpenMyVideos === 'function') {
+              window.__mhOpenMyVideos();
             } else {
               const trigger = document.getElementById('mh-video-nav-trigger');
               if (trigger) trigger.click();
