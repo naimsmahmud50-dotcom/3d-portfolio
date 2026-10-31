@@ -97,9 +97,13 @@
   ];
 
   // =========================================================================
-  // AI VIDEO PRODUCTIONS & MOTION SHOWCASE (CLIENT PORTFOLIO)
-  // Instructions: Replace 'youtubeId' with your YouTube video ID (e.g. 'L_LUpnjgPso')
-  // or set 'videoUrl' to a direct MP4, WebM, or Google Drive preview link.
+  // EXTRA SKILLS: AI VIDEO PRODUCTIONS & GOOGLE DRIVE SHOWCASE
+  // Instructions: To add your own videos:
+  // 1. Google Drive: Paste your shareable drive link in 'driveUrl':
+  //    e.g. driveUrl: 'https://drive.google.com/file/d/YOUR_FILE_ID/view?usp=sharing'
+  // 2. YouTube: Paste your YouTube video ID or link in 'youtubeId':
+  //    e.g. youtubeId: 'L_LUpnjgPso'
+  // 3. Direct File: Paste direct MP4 URL in 'videoUrl'
   // =========================================================================
   const AI_VIDEOS_CONFIG = [
     {
@@ -110,7 +114,8 @@
       category: 'AI DIRECTION & CINEMATOGRAPHY',
       tools: ['Runway Gen-3 Alpha', 'Midjourney v6', 'ElevenLabs', 'Premiere Pro'],
       desc: 'High-craft cinematic short commercial created with advanced camera control prompts, photorealistic lighting, and atmospheric neural sound design.',
-      youtubeId: 'L_LUpnjgPso', // Replace with your YouTube Video ID or URL
+      driveUrl: '', // Add Google Drive link here (or use youtubeId)
+      youtubeId: 'L_LUpnjgPso',
       videoUrl: '',
       ratio: '16:9'
     },
@@ -122,7 +127,8 @@
       category: 'AI MOTION GRAPHICS',
       tools: ['Kling AI', 'Luma Dream Machine', 'After Effects', 'Remotion'],
       desc: 'Rapid-paced futuristic brand teaser featuring dynamic 3D camera sweeps, particle VFX simulation, and beat-synced kinetic typography.',
-      youtubeId: 'jNQXAC9IVRw', // Replace with your YouTube Video ID or URL
+      driveUrl: '',
+      youtubeId: 'jNQXAC9IVRw',
       videoUrl: '',
       ratio: '16:9'
     },
@@ -134,7 +140,8 @@
       category: 'CHARACTER ANIMATION & VOICE',
       tools: ['Kling AI 1.5', 'LivePortrait', 'ElevenLabs Neural Sync', 'CapCut Pro'],
       desc: 'Multi-scene character narrative showcasing facial expression consistency, emotional character performance, and neural voiceover dialogue.',
-      youtubeId: 'kJQP7kiw5Fk', // Replace with your YouTube Video ID or URL
+      driveUrl: '',
+      youtubeId: 'kJQP7kiw5Fk',
       videoUrl: '',
       ratio: '16:9'
     },
@@ -146,11 +153,62 @@
       category: 'TECH EXPLAINER & VISUALS',
       tools: ['Runway Gen-3', 'Sora Architecture', 'Topaz Video AI 4K', 'Adobe Audition'],
       desc: 'Sleek product visualizer demonstrating hardware and software functionality with crisp 3D angles, clean motion physics, and studio voice narration.',
-      youtubeId: 'fJ9rUzIMcZQ', // Replace with your YouTube Video ID or URL
+      driveUrl: '',
+      youtubeId: 'fJ9rUzIMcZQ',
       videoUrl: '',
       ratio: '16:9'
     }
   ];
+
+  // Helper to resolve video stream/embed source (Google Drive, YouTube, direct MP4)
+  function resolveVideoSource(video) {
+    if (!video) return { type: 'youtube', embedUrl: 'https://www.youtube-nocookie.com/embed/L_LUpnjgPso?autoplay=1&rel=0' };
+
+    const candidateUrl = video.driveUrl || video.videoUrl || (video.youtubeId && video.youtubeId.includes('drive.google.com') ? video.youtubeId : '');
+    
+    // 1. Google Drive Link Parsing
+    if (candidateUrl && candidateUrl.includes('drive.google.com')) {
+      const driveMatch = candidateUrl.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || 
+                         candidateUrl.match(/[?&]id=([a-zA-Z0-9_-]+)/) ||
+                         candidateUrl.match(/drive\.google\.com\/.*\/([a-zA-Z0-9_-]{20,})/);
+      const fileId = driveMatch ? driveMatch[1] : '';
+      if (fileId) {
+        return {
+          type: 'drive',
+          embedUrl: `https://drive.google.com/file/d/${fileId}/preview`,
+          driveUrl: `https://drive.google.com/file/d/${fileId}/view?usp=sharing`,
+          fileId: fileId
+        };
+      }
+    }
+
+    // 2. Direct HTML5 video (.mp4, .webm, .ogg)
+    if (video.videoUrl && (/\.(mp4|webm|ogg)($|\?)/i.test(video.videoUrl))) {
+      return {
+        type: 'html5',
+        videoUrl: video.videoUrl,
+        embedUrl: video.videoUrl
+      };
+    }
+
+    // 3. YouTube link or ID
+    let ytId = video.youtubeId || '';
+    if (ytId.includes('youtube.com') || ytId.includes('youtu.be')) {
+      const ytMatch = ytId.match(/(?:youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*)/);
+      if (ytMatch && ytMatch[1] && ytMatch[1].length === 11) {
+        ytId = ytMatch[1];
+      }
+    }
+    if (!ytId) {
+      ytId = 'L_LUpnjgPso';
+    }
+
+    return {
+      type: 'youtube',
+      embedUrl: `https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&rel=0&modestbranding=1`,
+      youtubeId: ytId
+    };
+  }
 
   // AI Video Player Modal Functions
   function openVideoPlayer(videoId) {
@@ -196,18 +254,30 @@
 
     // Setup player
     const playerWrap = document.getElementById('mh-vmodal-player');
-    if (video.videoUrl && (video.videoUrl.endsWith('.mp4') || video.videoUrl.endsWith('.webm'))) {
+    const srcInfo = resolveVideoSource(video);
+
+    if (srcInfo.type === 'drive') {
+      playerWrap.innerHTML = `
+        <iframe 
+          src="${srcInfo.embedUrl}" 
+          title="${video.title}" 
+          class="mh-video-iframe"
+          frameborder="0" 
+          allow="autoplay; fullscreen" 
+          allowfullscreen>
+        </iframe>
+      `;
+    } else if (srcInfo.type === 'html5') {
       playerWrap.innerHTML = `
         <video controls autoplay playsinline class="mh-video-element">
-          <source src="${video.videoUrl}" type="video/mp4">
+          <source src="${srcInfo.videoUrl}" type="video/mp4">
           Your browser does not support HTML5 video.
         </video>
       `;
     } else {
-      const ytId = video.youtubeId || 'L_LUpnjgPso';
       playerWrap.innerHTML = `
         <iframe 
-          src="https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&rel=0&modestbranding=1" 
+          src="${srcInfo.embedUrl}" 
           title="${video.title}" 
           class="mh-video-iframe"
           frameborder="0" 
@@ -241,7 +311,7 @@
   window.__mhOpenVideoPlayer = openVideoPlayer;
   window.__mhCloseVideoPlayer = closeVideoPlayer;
 
-  // Dedicated My Videos Showcase Modal Controller
+  // Dedicated Extra Skills & Videos Showcase Modal Controller
   function openMyVideosModal() {
     let modal = document.getElementById('mh-my-videos-modal');
     if (!modal) {
@@ -252,14 +322,17 @@
         <div class="mh-videos-modal-dialog">
           <div class="mh-videos-modal-header">
             <div class="mh-videos-modal-titles">
-              <span class="mh-videos-kicker">CINEMATIC AI PRODUCTIONS</span>
-              <h3 class="mh-videos-headline">🎬 My Videos</h3>
-              <p class="mh-videos-subline">AI Video Direction, Prompt Cinematography &amp; Kinetic Motion VFX</p>
+              <span class="mh-videos-kicker">SPECIALIZED CREATIVE &amp; AI SUITE</span>
+              <h3 class="mh-videos-headline">🎬 Extra Skills &amp; Video Productions</h3>
+              <p class="mh-videos-subline">AI Video Direction, Prompt Cinematography, Motion VFX &amp; Google Drive Previews</p>
             </div>
-            <button type="button" class="mh-videos-modal-close" id="mh-videos-modal-close" aria-label="Close My Videos">✕</button>
+            <button type="button" class="mh-videos-modal-close" id="mh-videos-modal-close" aria-label="Close Extra Skills">✕</button>
           </div>
           <div class="mh-videos-cards-grid">
-            ${AI_VIDEOS_CONFIG.map(v => `
+            ${AI_VIDEOS_CONFIG.map(v => {
+              const srcInfo = resolveVideoSource(v);
+              const driveLink = v.driveUrl || (srcInfo.type === 'drive' ? srcInfo.driveUrl : '');
+              return `
               <div class="mh-vid-card" data-video-id="${v.id}">
                 <div class="mh-vid-card-top">
                   <span class="mh-vid-badge" style="border-color: ${v.accentColor}; color: ${v.accentColor};">${v.badge}</span>
@@ -270,11 +343,19 @@
                 <div class="mh-vid-tools">
                   ${v.tools.map(t => `<span class="mh-vid-tool-tag">${t}</span>`).join('')}
                 </div>
-                <button type="button" class="mh-vid-play-btn" onclick="window.__mhOpenVideoPlayer('${v.id}')">
-                  <span>▶ WATCH VIDEO</span>
-                </button>
+                <div class="mh-vid-actions-row">
+                  <button type="button" class="mh-vid-play-btn" onclick="window.__mhOpenVideoPlayer('${v.id}')">
+                    <span>▶ WATCH PREVIEW</span>
+                  </button>
+                  ${driveLink ? `
+                    <a href="${driveLink}" target="_blank" rel="noopener noreferrer" class="mh-vid-drive-btn" aria-label="Open on Google Drive">
+                      <span>📁 DRIVE ↗</span>
+                    </a>
+                  ` : ''}
+                </div>
               </div>
-            `).join('')}
+            `;
+            }).join('')}
           </div>
         </div>
       `;
@@ -303,6 +384,8 @@
 
   window.__mhOpenMyVideos = openMyVideosModal;
   window.__mhCloseMyVideos = closeMyVideosModal;
+  window.__mhOpenExtraSkills = openMyVideosModal;
+  window.__mhCloseExtraSkills = closeMyVideosModal;
 
   // 1. Toast Notification Helper
   function showToast(message) {
@@ -1373,6 +1456,87 @@
           sizer.textContent = 'PROJECT SLIDE VIEW';
         }
       });
+
+      // Bind click handler for native or rendered EXTRA SKILLS link
+      const extraSkillLinks = document.querySelectorAll('a[href="#extra-skills"], a[href$="#extra-skills"]');
+      extraSkillLinks.forEach(link => {
+        if (!link.dataset.mhBound) {
+          link.dataset.mhBound = 'true';
+          link.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const menuToggle = document.querySelector('button._rHu7W_menu, button[aria-label="Menu"]');
+            const menuPanel = document.querySelector('._rHu7W_menuPanel, [class*="_rHu7W_menuPanel"]');
+            if (menuPanel && menuPanel.getAttribute('aria-hidden') === 'false' && menuToggle) {
+              menuToggle.click();
+            }
+
+            if (typeof window.__mhOpenMyVideos === 'function') {
+              window.__mhOpenMyVideos();
+            }
+          });
+        }
+      });
+
+      // Fallback: If React didn't render EXTRA SKILLS, inject into 3-dots menu panel
+      const linksContainer = document.querySelector('ul._rHu7W_links, [class*="_rHu7W_links"]');
+      const hasExtraSkill = document.querySelector('a[href="#extra-skills"], #mh-menu-item-extra-skills');
+      if (linksContainer && !hasExtraSkill) {
+        const extraLi = document.createElement('li');
+        extraLi.className = '_rHu7W_linkItem';
+        extraLi.id = 'mh-menu-item-extra-skills';
+        extraLi.innerHTML = `
+          <a href="#extra-skills" class="_rHu7W_link" tabindex="-1" id="mh-menu-link-extra-skills">
+            <span class="_rHu7W_linkLabel">EXTRA SKILLS</span>
+            <svg width="64" height="64" viewBox="96 96 64 64" fill="currentColor" xmlns="http://www.w3.org/2000/svg" class="_rHu7W_linkHoverDot" aria-hidden="true"><circle cx="128" cy="128" r="32"></circle></svg>
+          </a>
+        `;
+
+        let refNode = null;
+        const items = linksContainer.querySelectorAll('li');
+        for (const item of items) {
+          const t = (item.textContent || '').trim().toUpperCase();
+          if (t.includes('PROJECT SLIDE VIEW') || t.includes('LITE VERSION')) {
+            refNode = item;
+            break;
+          }
+        }
+        if (refNode) {
+          linksContainer.insertBefore(extraLi, refNode);
+        } else {
+          linksContainer.appendChild(extraLi);
+        }
+
+        const linkA = extraLi.querySelector('a');
+        if (linkA) {
+          linkA.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const menuToggle = document.querySelector('button._rHu7W_menu, button[aria-label="Menu"]');
+            const menuPanel = document.querySelector('._rHu7W_menuPanel, [class*="_rHu7W_menuPanel"]');
+            if (menuPanel && menuPanel.getAttribute('aria-hidden') === 'false' && menuToggle) {
+              menuToggle.click();
+            }
+
+            if (typeof window.__mhOpenMyVideos === 'function') {
+              window.__mhOpenMyVideos();
+            }
+          });
+        }
+      }
+
+      // Ensure linkSizer accommodates "EXTRA SKILLS"
+      const linkSizer = document.querySelector('span._rHu7W_linkSizer, [class*="_rHu7W_linkSizer"]');
+      const hasSizer = Array.from(document.querySelectorAll('._rHu7W_linkSizerLabel')).some(s => s.textContent.trim().toUpperCase() === 'EXTRA SKILLS');
+      if (linkSizer && !hasSizer && !document.getElementById('mh-menu-sizer-extra-skills')) {
+        const sizerSpan = document.createElement('span');
+        sizerSpan.id = 'mh-menu-sizer-extra-skills';
+        sizerSpan.className = '_rHu7W_linkSizerLabel';
+        sizerSpan.textContent = 'EXTRA SKILLS';
+        linkSizer.appendChild(sizerSpan);
+      }
     }
 
     applySync();
@@ -1409,28 +1573,11 @@
   // 12. Mobile 3D Skills & Profile HUD Engine (Runs on mobile devices)
   function setupMobileSkillsHud() {
     function injectHud() {
-      // 1. Inject top navbar pill button on mobile & desktop
-      const availWrap = document.querySelector('._rHu7W_availabilityWrap, [class*="_rHu7W_availabilityWrap"]');
-      if (availWrap) {
-        const oldSkillsBtn = document.getElementById('mh-mobile-skills-trigger');
-        if (oldSkillsBtn) oldSkillsBtn.remove();
-        if (!document.getElementById('mh-video-nav-trigger')) {
-          const vBtn = document.createElement('button');
-          vBtn.id = 'mh-video-nav-trigger';
-          vBtn.type = 'button';
-          vBtn.className = 'mh-mobile-hud-pill mh-pill-video';
-          vBtn.innerHTML = '<span class="mh-pill-icon">🎬</span> <span>My Videos</span>';
-          vBtn.setAttribute('aria-label', 'Open My Videos Showcase');
-          vBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            if (typeof window.__mhOpenMyVideos === 'function') {
-              window.__mhOpenMyVideos();
-            }
-          });
-          availWrap.parentNode.insertBefore(vBtn, availWrap.nextSibling);
-        }
-      }
+      // 1. Ensure top navbar remains clean (remove any video/skills button from navbar)
+      const oldVidBtn = document.getElementById('mh-video-nav-trigger');
+      if (oldVidBtn) oldVidBtn.remove();
+      const oldSkillsBtn = document.getElementById('mh-mobile-skills-trigger');
+      if (oldSkillsBtn) oldSkillsBtn.remove();
 
       // 2. Inject Modal Sheet
       if (!document.getElementById('mh-mobile-hud-modal')) {
@@ -1812,9 +1959,6 @@
             e.stopPropagation();
             if (typeof window.__mhOpenMyVideos === 'function') {
               window.__mhOpenMyVideos();
-            } else {
-              const trigger = document.getElementById('mh-video-nav-trigger');
-              if (trigger) trigger.click();
             }
           });
         }

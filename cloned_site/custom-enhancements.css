@@ -2442,3 +2442,95 @@ body.is-lite ._rHu7W_nav,
   transform: translateY(-1px) !important;
 }
 
+/* ==========================================================================
+   19. 3-DOT MENU "EXTRA SKILLS" LINK & DRIVE ACTIONS STYLES
+   ========================================================================== */
+#mh-video-nav-trigger {
+  display: none !important;
+}
+
+#mh-menu-item-extra-skills {
+  clip-path: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  list-style: none !important;
+}
+
+#mh-menu-item-extra-skills a._rHu7W_link {
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  display: inline-block !important;
+  color: #ebebebeb !important;
+  transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+#mh-menu-item-extra-skills a._rHu7W_link:hover {
+  color: #00ff88 !important;
+}
+
+#mh-menu-item-extra-skills a._rHu7W_link:hover ._rHu7W_linkLabel {
+  transform: translate(-0.85em) !important;
+}
+
+#mh-menu-item-extra-skills a._rHu7W_link:hover ._rHu7W_linkHoverDot {
+  opacity: 0.9 !important;
+  color: #00ff88 !important;
+  transform: translateY(-50%) scale(1) !important;
+}
+
+.mh-vid-actions-row {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  margin-top: 14px !important;
+}
+
+.mh-vid-actions-row .mh-vid-play-btn {
+  flex: 1 !important;
+  margin-top: 0 !important;
+}
+
+.mh-vid-drive-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  padding: 10px 14px !important;
+  border-radius: 10px !important;
+  background: rgba(59, 130, 246, 0.15) !important;
+  border: 1px solid rgba(59, 130, 246, 0.45) !important;
+  color: #60a5fa !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  text-decoration: none !important;
+  text-transform: uppercase !important;
+  transition: all 0.2s ease !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+}
+
+.mh-vid-drive-btn:hover {
+  background: rgba(59, 130, 246, 0.3) !important;
+  border-color: #93c5fd !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 16px rgba(59, 130, 246, 0.4) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* ==========================================================================
+   20. 3-DOT MENU GUARANTEED VISIBILITY & INTERACTION FIX
+   ========================================================================== */
+._rHu7W_menuPanel[aria-hidden="false"] ._rHu7W_linkItem {
+  clip-path: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+._rHu7W_menuPanel[aria-hidden="false"] ._rHu7W_link {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+
