@@ -108,53 +108,79 @@
   const AI_VIDEOS_CONFIG = [
     {
       id: 'ai-vid-1',
-      badge: '4K CINEMATIC COMMERCIAL',
+      badge: '5-STAR PROMOTIONAL FILM',
       accentColor: '#00ff88',
-      title: 'Neon Odyssey: AI Cinematic Brand Film',
-      category: 'AI DIRECTION & CINEMATOGRAPHY',
-      tools: ['Runway Gen-3 Alpha', 'Midjourney v6', 'ElevenLabs', 'Premiere Pro'],
-      desc: 'High-craft cinematic short commercial created with advanced camera control prompts, photorealistic lighting, and atmospheric neural sound design.',
-      driveUrl: '', // Add Google Drive link here (or use youtubeId)
-      youtubeId: 'L_LUpnjgPso',
+      title: 'As-Sunnah Foundation: High-Impact Promotional Film',
+      category: 'BRAND CAMPAIGN & PROMOTIONAL DIRECTION',
+      tools: ['Premiere Pro', 'After Effects', 'Cinematic Sound Design', '4K Color Grading'],
+      desc: 'Flagship promotional brand film engineered for As-Sunnah Foundation featuring high-impact visual pacing, compelling emotional narrative, dynamic audio sync, and broadcast-grade polish.',
+      driveUrl: 'https://drive.google.com/file/d/1YfTn4LIyoX7vUcb0kkTFHkVgA8F56TRx/view?usp=sharing',
+      youtubeId: '',
       videoUrl: '',
       ratio: '16:9'
     },
     {
       id: 'ai-vid-2',
-      badge: 'KINETIC MOTION VFX',
-      accentColor: '#00e5ff',
-      title: 'Cyber Pulse: AI Kinetic Motion & VFX Teaser',
-      category: 'AI MOTION GRAPHICS',
-      tools: ['Kling AI', 'Luma Dream Machine', 'After Effects', 'Remotion'],
-      desc: 'Rapid-paced futuristic brand teaser featuring dynamic 3D camera sweeps, particle VFX simulation, and beat-synced kinetic typography.',
-      driveUrl: '',
-      youtubeId: 'jNQXAC9IVRw',
+      badge: 'ROYAL ISLAMIC CINEMATIC 1080P',
+      accentColor: '#eab308',
+      title: 'Royal Islamic Heritage: Cinematic Visual Showcase',
+      category: 'ISLAMIC MEDIA & ROYAL DIRECTION',
+      tools: ['Motion Graphics', 'After Effects', 'Islamic Visual Arts', 'Studio Audio Mastering'],
+      desc: 'Atmospheric and regal Islamic promotional showcase featuring traditional aesthetic elegance, geometric motifs, royal color grading, and heartfelt devotional cinematography.',
+      driveUrl: 'https://drive.google.com/file/d/1tU-9vTS6K4j76e02M2AkT8Di9DMVvlJT/view?usp=sharing',
+      youtubeId: '',
       videoUrl: '',
       ratio: '16:9'
     },
     {
       id: 'ai-vid-3',
-      badge: 'CHARACTER NARRATIVE',
-      accentColor: '#a78bfa',
-      title: 'Echoes of Tomorrow: AI Narrative Storytelling',
-      category: 'CHARACTER ANIMATION & VOICE',
-      tools: ['Kling AI 1.5', 'LivePortrait', 'ElevenLabs Neural Sync', 'CapCut Pro'],
-      desc: 'Multi-scene character narrative showcasing facial expression consistency, emotional character performance, and neural voiceover dialogue.',
-      driveUrl: '',
-      youtubeId: 'kJQP7kiw5Fk',
+      badge: 'AI AGENT MOTION GRAPHICS',
+      accentColor: '#00e5ff',
+      title: 'Autonomous AI Agents: Kinetic Motion Explainer',
+      category: 'AI AUTOMATION & MOTION DESIGN',
+      tools: ['Kinetic Motion Graphics', 'Autonomous Agents Flow', 'Remotion & After Effects', 'Cyberpunk VFX'],
+      desc: 'Futuristic kinetic motion breakdown demonstrating the core mechanics, multi-agent coordination, and real-time execution pipelines of autonomous AI systems.',
+      driveUrl: 'https://drive.google.com/file/d/1JuNz6zA5_Yp5vFte5iRTbT4zHLgbwwwC/view?usp=sharing',
+      youtubeId: '',
       videoUrl: '',
       ratio: '16:9'
     },
     {
       id: 'ai-vid-4',
-      badge: 'PRODUCT EXPLAINER',
-      accentColor: '#f59e0b',
-      title: 'Nexus Core: AI Product & Tech Visualizer',
-      category: 'TECH EXPLAINER & VISUALS',
-      tools: ['Runway Gen-3', 'Sora Architecture', 'Topaz Video AI 4K', 'Adobe Audition'],
-      desc: 'Sleek product visualizer demonstrating hardware and software functionality with crisp 3D angles, clean motion physics, and studio voice narration.',
-      driveUrl: '',
-      youtubeId: 'fJ9rUzIMcZQ',
+      badge: 'NEURAL VOICE CLONE & MOTION',
+      accentColor: '#a78bfa',
+      title: 'Neural Voice Cloning: Multi-Modal AI & Voice Synthesis',
+      category: 'VOICE SYNTHESIS & AI DIRECTION',
+      tools: ['ElevenLabs Custom Voice Clone', 'AI Video Generation', 'Audio Post-Production', 'Motion Design'],
+      desc: 'Innovative AI production combining high-fidelity neural voice cloning with synchronized kinetic motion design, demonstrating conversational realism and modern AI storytelling.',
+      driveUrl: 'https://drive.google.com/file/d/1ats_4U8ZtcWlxrv0bCxoVdJzstwzcvUM/view?usp=sharing',
+      youtubeId: '',
+      videoUrl: '',
+      ratio: '16:9'
+    },
+    {
+      id: 'ai-vid-5',
+      badge: 'TECH THOUGHT LEADERSHIP',
+      accentColor: '#f43f5e',
+      title: 'Vibe Coding vs Agentic Engineering: The Paradigm Shift',
+      category: 'SOFTWARE ENGINEERING & AI ARCHITECTURE',
+      tools: ['AI System Architecture', 'Kinetic Typography', 'Technical Narration', 'Visual Storytelling'],
+      desc: 'In-depth conceptual breakdown contrasting fast vibe coding with production-grade agentic engineering, structured specifications, and deterministic code systems.',
+      driveUrl: 'https://drive.google.com/file/d/1GtOJMEeEMpaWcoQ0tqADP0B8d6Pr7CZs/view?usp=sharing',
+      youtubeId: '',
+      videoUrl: '',
+      ratio: '16:9'
+    },
+    {
+      id: 'ai-vid-6',
+      badge: 'EDUCATIONAL & ROADMAP',
+      accentColor: '#38bdf8',
+      title: 'Learn AI: Next-Gen Artificial Intelligence Roadmap',
+      category: 'AI EDUCATION & VISUAL LEARNING',
+      tools: ['Educational Storyboarding', 'AI Concept Visualization', 'Video Post-Processing', 'Audio Narration'],
+      desc: 'Comprehensive visual roadmap outlining key learning milestones in modern artificial intelligence, deep learning models, automation frameworks, and agent design.',
+      driveUrl: 'https://drive.google.com/file/d/1B65700qcb7Z_kGjFNnSlV-Y0sFbGVbOI/view?usp=sharing',
+      youtubeId: '',
       videoUrl: '',
       ratio: '16:9'
     }
@@ -324,7 +350,12 @@
             <div class="mh-videos-modal-titles">
               <span class="mh-videos-kicker">SPECIALIZED CREATIVE &amp; AI SUITE</span>
               <h3 class="mh-videos-headline">🎬 Extra Skills &amp; Video Productions</h3>
-              <p class="mh-videos-subline">AI Video Direction, Prompt Cinematography, Motion VFX &amp; Google Drive Previews</p>
+              <p class="mh-videos-subline">AI Video Direction, Motion Graphics, Voice Cloning &amp; High-Craft Productions</p>
+              <div style="margin-top: 10px;">
+                <a href="https://drive.google.com/drive/folders/1jfTAuCZf34FbLfQbvsAei2VM-2mHS0kR?usp=sharing" target="_blank" rel="noopener noreferrer" class="mh-videos-folder-btn">
+                  <span>📁 OPEN COMPLETE GOOGLE DRIVE VAULT ↗</span>
+                </a>
+              </div>
             </div>
             <button type="button" class="mh-videos-modal-close" id="mh-videos-modal-close" aria-label="Close Extra Skills">✕</button>
           </div>
