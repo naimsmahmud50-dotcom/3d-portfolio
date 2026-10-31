@@ -1412,16 +1412,8 @@
       // 1. Inject top navbar pill button on mobile & desktop
       const availWrap = document.querySelector('._rHu7W_availabilityWrap, [class*="_rHu7W_availabilityWrap"]');
       if (availWrap) {
-        if (!document.getElementById('mh-mobile-skills-trigger')) {
-          const btn = document.createElement('button');
-          btn.id = 'mh-mobile-skills-trigger';
-          btn.type = 'button';
-          btn.className = 'mh-mobile-hud-pill';
-          btn.innerHTML = '<span>⚡ SKILLS &amp; BIO</span>';
-          btn.setAttribute('aria-label', 'Open Skills & Bio Drawer');
-          btn.addEventListener('click', () => openHud());
-          availWrap.parentNode.insertBefore(btn, availWrap.nextSibling);
-        }
+        const oldSkillsBtn = document.getElementById('mh-mobile-skills-trigger');
+        if (oldSkillsBtn) oldSkillsBtn.remove();
         if (!document.getElementById('mh-video-nav-trigger')) {
           const vBtn = document.createElement('button');
           vBtn.id = 'mh-video-nav-trigger';
