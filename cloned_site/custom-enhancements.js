@@ -96,6 +96,150 @@
     PROJECTS_DB['linkedin automation']
   ];
 
+  // =========================================================================
+  // AI VIDEO PRODUCTIONS & MOTION SHOWCASE (CLIENT PORTFOLIO)
+  // Instructions: Replace 'youtubeId' with your YouTube video ID (e.g. 'L_LUpnjgPso')
+  // or set 'videoUrl' to a direct MP4, WebM, or Google Drive preview link.
+  // =========================================================================
+  const AI_VIDEOS_CONFIG = [
+    {
+      id: 'ai-vid-1',
+      badge: '4K CINEMATIC COMMERCIAL',
+      accentColor: '#00ff88',
+      title: 'Neon Odyssey: AI Cinematic Brand Film',
+      category: 'AI DIRECTION & CINEMATOGRAPHY',
+      tools: ['Runway Gen-3 Alpha', 'Midjourney v6', 'ElevenLabs', 'Premiere Pro'],
+      desc: 'High-craft cinematic short commercial created with advanced camera control prompts, photorealistic lighting, and atmospheric neural sound design.',
+      youtubeId: 'L_LUpnjgPso', // Replace with your YouTube Video ID or URL
+      videoUrl: '',
+      ratio: '16:9'
+    },
+    {
+      id: 'ai-vid-2',
+      badge: 'KINETIC MOTION VFX',
+      accentColor: '#00e5ff',
+      title: 'Cyber Pulse: AI Kinetic Motion & VFX Teaser',
+      category: 'AI MOTION GRAPHICS',
+      tools: ['Kling AI', 'Luma Dream Machine', 'After Effects', 'Remotion'],
+      desc: 'Rapid-paced futuristic brand teaser featuring dynamic 3D camera sweeps, particle VFX simulation, and beat-synced kinetic typography.',
+      youtubeId: 'jNQXAC9IVRw', // Replace with your YouTube Video ID or URL
+      videoUrl: '',
+      ratio: '16:9'
+    },
+    {
+      id: 'ai-vid-3',
+      badge: 'CHARACTER NARRATIVE',
+      accentColor: '#a78bfa',
+      title: 'Echoes of Tomorrow: AI Narrative Storytelling',
+      category: 'CHARACTER ANIMATION & VOICE',
+      tools: ['Kling AI 1.5', 'LivePortrait', 'ElevenLabs Neural Sync', 'CapCut Pro'],
+      desc: 'Multi-scene character narrative showcasing facial expression consistency, emotional character performance, and neural voiceover dialogue.',
+      youtubeId: 'kJQP7kiw5Fk', // Replace with your YouTube Video ID or URL
+      videoUrl: '',
+      ratio: '16:9'
+    },
+    {
+      id: 'ai-vid-4',
+      badge: 'PRODUCT EXPLAINER',
+      accentColor: '#f59e0b',
+      title: 'Nexus Core: AI Product & Tech Visualizer',
+      category: 'TECH EXPLAINER & VISUALS',
+      tools: ['Runway Gen-3', 'Sora Architecture', 'Topaz Video AI 4K', 'Adobe Audition'],
+      desc: 'Sleek product visualizer demonstrating hardware and software functionality with crisp 3D angles, clean motion physics, and studio voice narration.',
+      youtubeId: 'fJ9rUzIMcZQ', // Replace with your YouTube Video ID or URL
+      videoUrl: '',
+      ratio: '16:9'
+    }
+  ];
+
+  // AI Video Player Modal Functions
+  function openVideoPlayer(videoId) {
+    const video = AI_VIDEOS_CONFIG.find(v => v.id === videoId) || AI_VIDEOS_CONFIG[0];
+    if (!video) return;
+
+    let modal = document.getElementById('mh-video-player-modal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'mh-video-player-modal';
+      modal.className = 'mh-video-modal-backdrop';
+      modal.innerHTML = `
+        <div class="mh-video-modal-card">
+          <div class="mh-video-modal-header">
+            <div class="mh-video-modal-titles">
+              <span class="mh-video-badge" id="mh-vmodal-badge">4K AI CINEMATIC</span>
+              <h3 class="mh-video-modal-title" id="mh-vmodal-title">Video Title</h3>
+              <p class="mh-video-modal-sub" id="mh-vmodal-sub">AI DIRECTION &amp; CINEMATOGRAPHY</p>
+            </div>
+            <button type="button" class="mh-video-modal-close" id="mh-vmodal-close" aria-label="Close Video">✕</button>
+          </div>
+          <div class="mh-video-player-container" id="mh-vmodal-player"></div>
+          <div class="mh-video-modal-info">
+            <p class="mh-video-modal-desc" id="mh-vmodal-desc"></p>
+            <div class="mh-video-modal-tools" id="mh-vmodal-tools"></div>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+
+      modal.querySelector('#mh-vmodal-close').addEventListener('click', closeVideoPlayer);
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeVideoPlayer();
+      });
+    }
+
+    // Set title and badges
+    document.getElementById('mh-vmodal-badge').textContent = video.badge;
+    document.getElementById('mh-vmodal-title').textContent = video.title;
+    document.getElementById('mh-vmodal-sub').textContent = video.category;
+    document.getElementById('mh-vmodal-desc').textContent = video.desc;
+    document.getElementById('mh-vmodal-tools').innerHTML = video.tools.map(t => `<span class="mh-vtool-pill">${t}</span>`).join('');
+
+    // Setup player
+    const playerWrap = document.getElementById('mh-vmodal-player');
+    if (video.videoUrl && (video.videoUrl.endsWith('.mp4') || video.videoUrl.endsWith('.webm'))) {
+      playerWrap.innerHTML = `
+        <video controls autoplay playsinline class="mh-video-element">
+          <source src="${video.videoUrl}" type="video/mp4">
+          Your browser does not support HTML5 video.
+        </video>
+      `;
+    } else {
+      const ytId = video.youtubeId || 'L_LUpnjgPso';
+      playerWrap.innerHTML = `
+        <iframe 
+          src="https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&rel=0&modestbranding=1" 
+          title="${video.title}" 
+          class="mh-video-iframe"
+          frameborder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+          allowfullscreen>
+        </iframe>
+      `;
+    }
+
+    modal.classList.add('active');
+    document.body.classList.add('mh-modal-open');
+  }
+
+  function closeVideoPlayer() {
+    const modal = document.getElementById('mh-video-player-modal');
+    if (modal) {
+      modal.classList.remove('active');
+      const playerWrap = document.getElementById('mh-vmodal-player');
+      if (playerWrap) playerWrap.innerHTML = '';
+    }
+    document.body.classList.remove('mh-modal-open');
+  }
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeVideoPlayer();
+    }
+  });
+
+  window.__mhOpenVideoPlayer = openVideoPlayer;
+  window.__mhCloseVideoPlayer = closeVideoPlayer;
+
   // 1. Toast Notification Helper
   function showToast(message) {
     let toast = document.getElementById('mh-toast');
@@ -292,6 +436,7 @@
           <div style="color:#e0e6ed;">Available Commands:</div>
           <div style="margin-left:14px; margin-top:4px;">
             <div><span style="color:#00ff88; font-weight:bold;">skills</span>          - Display AI, Web, Android &amp; Security capabilities</div>
+            <div><span style="color:#c084fc; font-weight:bold;">videos</span>          - Launch AI Video Productions &amp; Motion Showcase</div>
             <div><span style="color:#00ff88; font-weight:bold;">security-scan</span>   - Run live heuristic penetration audit simulation</div>
             <div><span style="color:#00ff88; font-weight:bold;">projects</span>        - List all 7 enterprise &amp; AI projects</div>
             <div><span style="color:#00ff88; font-weight:bold;">contact</span>         - One-click launch WhatsApp / Email inquiry</div>
@@ -302,12 +447,33 @@
         `;
         break;
 
+      case 'videos':
+      case 'video':
+        response.innerHTML = `
+          <div style="color:#c084fc; font-weight:bold; margin-bottom:6px;">── AI VIDEO PRODUCTIONS &amp; MOTION SHOWCASE ──</div>
+          <div style="color:#00ff88; font-weight:bold;">[🎬 4K CINEMATIC COMMERCIAL] Neon Odyssey</div>
+          <div style="color:#94a3b8; margin-left:14px; margin-bottom:4px;">Runway Gen-3 Alpha · Midjourney v6 · ElevenLabs · Premiere Pro</div>
+          <div style="color:#00e5ff; font-weight:bold;">[⚡ KINETIC MOTION VFX] Cyber Pulse</div>
+          <div style="color:#94a3b8; margin-left:14px; margin-bottom:4px;">Kling AI · Luma Dream Machine · After Effects · Remotion</div>
+          <div style="color:#a78bfa; font-weight:bold;">[🎭 CHARACTER NARRATIVE] Echoes of Tomorrow</div>
+          <div style="color:#94a3b8; margin-left:14px; margin-bottom:4px;">Kling AI 1.5 · LivePortrait · ElevenLabs Neural Voice Sync</div>
+          <div style="color:#f59e0b; font-weight:bold;">[💻 TECH PRODUCT DEMO] Nexus Core</div>
+          <div style="color:#94a3b8; margin-left:14px; margin-bottom:8px;">Runway Gen-3 · Sora · Topaz Video AI · Adobe Audition</div>
+          <div style="margin-top:6px;">
+            <a href="javascript:void(0)" onclick="if(window.__mhOpenHud)window.__mhOpenHud('videos')" style="color:#00e5ff; text-decoration:underline; font-weight:bold;">[▶ LAUNCH INTERACTIVE VIDEO SHOWCASE IN HUD]</a>
+          </div>
+        `;
+        break;
+
       case 'skills':
         response.innerHTML = `
           <div style="color:#00e5ff; font-weight:bold; margin-bottom:6px;">── TECHNICAL SUPERPOWERS MATRIX ──</div>
           <div style="color:#00ff88; font-weight:bold;">[🤖 AI &amp; AUTONOMOUS SYSTEMS]</div>
           <div style="color:#94a3b8; margin-left:14px; margin-bottom:6px;">LangChain, Autonomous Agent Swarms, OpenAI/Claude API, Meta Graph API, WhatsApp Bot Automation, Puppeteer Web Scraping</div>
           
+          <div style="color:#c084fc; font-weight:bold;">[🎬 AI VIDEO &amp; MOTION PRODUCTIONS]</div>
+          <div style="color:#94a3b8; margin-left:14px; margin-bottom:6px;">Runway Gen-3 Alpha, Kling AI 1.5, Luma Dream Machine, Sora, Camera Motion Choreography, AI Upscaling, ElevenLabs Voice Sync</div>
+
           <div style="color:#00e5ff; font-weight:bold;">[🌐 WEB &amp; CLOUD ARCHITECTURE]</div>
           <div style="color:#94a3b8; margin-left:14px; margin-bottom:6px;">Next.js (App Router), React, Node.js, TypeScript, PostgreSQL, MongoDB, REST &amp; GraphQL APIs, Docker</div>
           
@@ -655,6 +821,12 @@
                 <span class="chip-lead">AI AUTOMATION</span>
                 <span class="chip-sep">/</span>
                 <span class="chip-detail">LANGCHAIN · AUTONOMOUS AGENTS · PYTHON</span>
+              </div>
+              <div class="mh-skill-chip">
+                <span class="chip-accent">//</span>
+                <span class="chip-lead">AI VIDEO &amp; MOTION</span>
+                <span class="chip-sep">/</span>
+                <span class="chip-detail">RUNWAY GEN-3 · KLING AI · LUMA · SORA</span>
               </div>
               <div class="mh-skill-chip">
                 <span class="chip-accent">//</span>
@@ -1224,17 +1396,29 @@
   // 12. Mobile 3D Skills & Profile HUD Engine (Runs on mobile devices)
   function setupMobileSkillsHud() {
     function injectHud() {
-      // 1. Inject top navbar pill button on mobile
+      // 1. Inject top navbar pill button on mobile & desktop
       const availWrap = document.querySelector('._rHu7W_availabilityWrap, [class*="_rHu7W_availabilityWrap"]');
-      if (availWrap && !document.getElementById('mh-mobile-skills-trigger')) {
-        const btn = document.createElement('button');
-        btn.id = 'mh-mobile-skills-trigger';
-        btn.type = 'button';
-        btn.className = 'mh-mobile-hud-pill';
-        btn.innerHTML = '<span>⚡ SKILLS &amp; BIO</span>';
-        btn.setAttribute('aria-label', 'Open Skills & Bio Drawer');
-        btn.addEventListener('click', openHud);
-        availWrap.parentNode.insertBefore(btn, availWrap.nextSibling);
+      if (availWrap) {
+        if (!document.getElementById('mh-mobile-skills-trigger')) {
+          const btn = document.createElement('button');
+          btn.id = 'mh-mobile-skills-trigger';
+          btn.type = 'button';
+          btn.className = 'mh-mobile-hud-pill';
+          btn.innerHTML = '<span>⚡ SKILLS &amp; BIO</span>';
+          btn.setAttribute('aria-label', 'Open Skills & Bio Drawer');
+          btn.addEventListener('click', () => openHud());
+          availWrap.parentNode.insertBefore(btn, availWrap.nextSibling);
+        }
+        if (!document.getElementById('mh-video-nav-trigger')) {
+          const vBtn = document.createElement('button');
+          vBtn.id = 'mh-video-nav-trigger';
+          vBtn.type = 'button';
+          vBtn.className = 'mh-mobile-hud-pill mh-pill-video';
+          vBtn.innerHTML = '<span>🎬 AI VIDEOS</span>';
+          vBtn.setAttribute('aria-label', 'Open AI Video Showcase');
+          vBtn.addEventListener('click', () => openHud('videos'));
+          availWrap.parentNode.insertBefore(vBtn, availWrap.nextSibling);
+        }
       }
 
       // 2. Inject Modal Sheet
@@ -1283,6 +1467,10 @@
                 <div class="mh-hud-skill-desc">Multi-Agent Swarm Orchestration, LangChain, Tool Calling, RAG Pipelines, Playwright Stealth Browser Automation, Prompt Engineering.</div>
               </div>
               <div class="mh-hud-skill-card">
+                <div class="mh-hud-skill-head">🎬 AI Video Generation &amp; Motion Direction</div>
+                <div class="mh-hud-skill-desc">Cinematic Prompt Engineering, Runway Gen-3 Alpha, Kling AI, Luma Dream Machine, Sora, Camera Motion Choreography, AI Upscaling &amp; ElevenLabs Neural Audio Sync.</div>
+              </div>
+              <div class="mh-hud-skill-card">
                 <div class="mh-hud-skill-head">💻 Full-Stack &amp; Cloud Platforms</div>
                 <div class="mh-hud-skill-desc">Next.js 15 (App Router), TypeScript, Node.js, PostgreSQL, Medusa v1.20 Headless, Redis, Tailwind CSS, Docker, Linux Systems.</div>
               </div>
@@ -1294,6 +1482,27 @@
                 <div class="mh-hud-skill-head">🎨 3D Graphics &amp; Cyber Defense</div>
                 <div class="mh-hud-skill-desc">WebGPU, Three.js Custom Shaders, Remotion Motion Graphics, Certified Web Security Engineer (Arena Web Security).</div>
               </div>
+            </div>
+
+            <!-- AI Video Productions & Motion Showcase -->
+            <div class="mh-hud-section-label" id="mh-hud-video-section">🎬 AI VIDEO &amp; MOTION PRODUCTIONS (CLIENT SHOWCASE)</div>
+            <div class="mh-hud-video-grid">
+              ${AI_VIDEOS_CONFIG.map(v => `
+                <div class="mh-hud-video-card" data-video-id="${v.id}">
+                  <div class="mh-hud-video-meta">
+                    <span class="mh-hud-video-badge" style="border-color: ${v.accentColor}; color: ${v.accentColor};">${v.badge}</span>
+                    <span class="mh-hud-video-cat">${v.category}</span>
+                  </div>
+                  <h4 class="mh-hud-video-title">${v.title}</h4>
+                  <p class="mh-hud-video-desc">${v.desc}</p>
+                  <div class="mh-hud-video-tags">
+                    ${v.tools.map(t => `<span class="mh-hud-tag">${t}</span>`).join('')}
+                  </div>
+                  <button type="button" class="mh-hud-video-btn" onclick="if(window.__mhOpenVideoPlayer)window.__mhOpenVideoPlayer('${v.id}')">
+                    <span>▶ WATCH AI VIDEO</span>
+                  </button>
+                </div>
+              `).join('')}
             </div>
 
             <!-- Flagship Production Deliverables -->
@@ -1372,12 +1581,27 @@
       }
     }
 
-    function openHud() {
+    function openHud(targetSection) {
       window.__mhOpenHud = openHud;
-      const modal = document.getElementById('mh-mobile-hud-modal');
+      let modal = document.getElementById('mh-mobile-hud-modal');
+      if (!modal) {
+        injectHud();
+        modal = document.getElementById('mh-mobile-hud-modal');
+      }
       if (modal) {
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
+        if (targetSection === 'videos') {
+          setTimeout(() => {
+            const vidSec = document.getElementById('mh-hud-video-section');
+            const sheet = modal.querySelector('.mh-mobile-hud-sheet');
+            if (vidSec && sheet) {
+              sheet.scrollTo({ top: vidSec.offsetTop - 12, behavior: 'smooth' });
+            } else if (vidSec) {
+              vidSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }, 150);
+        }
       }
     }
 
@@ -1388,6 +1612,9 @@
         document.body.style.overflow = '';
       }
     }
+
+    window.__mhOpenHud = openHud;
+    window.__mhCloseHud = closeHud;
 
     // Intercept menu clicks on mobile or on /lite if user clicks ABOUT
     document.addEventListener('click', (e) => {
@@ -1402,6 +1629,7 @@
       }
     }, true);
 
+    injectHud();
     setTimeout(injectHud, 400);
     setInterval(injectHud, 2000);
   }
@@ -1569,12 +1797,27 @@
             <a id="mh-hud-act-primary" href="https://github.com/naimsmahmud50-dotcom/Madrasha-Managemant-Softaware" target="_blank" rel="noopener noreferrer" class="mh-hud-act-btn primary">
               <span id="mh-hud-act-text">⚡ GITHUB REPO</span>
             </a>
+            <button id="mh-hud-act-video" type="button" class="mh-hud-act-btn video">
+              <span>🎬 AI VIDEOS</span>
+            </button>
             <button id="mh-hud-act-all" type="button" class="mh-hud-act-btn secondary">
-              <span>📋 ALL 8 PROJECTS</span>
+              <span>📋 ALL 8</span>
             </button>
           </div>
         `;
         document.body.appendChild(hud);
+
+        const vidBtn = document.getElementById('mh-hud-act-video');
+        if (vidBtn) {
+          vidBtn.addEventListener('click', () => {
+            if (typeof window.__mhOpenHud === 'function') {
+              window.__mhOpenHud('videos');
+            } else {
+              const trigger = document.getElementById('mh-video-nav-trigger');
+              if (trigger) trigger.click();
+            }
+          });
+        }
 
         const allBtn = document.getElementById('mh-hud-act-all');
         if (allBtn) {
